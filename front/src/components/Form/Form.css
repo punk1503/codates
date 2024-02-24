@@ -1,0 +1,13 @@
+.custom_form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 15px;
+    margin: auto;
+}
+
+.custom_form > * {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

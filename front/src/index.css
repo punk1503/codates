@@ -1,0 +1,9 @@
+:root {
+/* colors */
+  --color-main-blue: hsl(211, 100%, 45%);
+  --color-main-pink: hsl(317, 100%, 68%);
+  --color-main-white: hsl(0, 0%, 100%);
+  --color-main-black: hsl(0, 0%, 0%);
+  --color-main-grey-blue: hsl(210, 16%, 20%);
+  --color-main-grey-pink: hsl(317, 14%, 20%);
+}
