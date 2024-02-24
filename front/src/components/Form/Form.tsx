@@ -5,11 +5,12 @@ import { useState} from "react"
 import axios from "axios"
 
 export default function Form({action_url, fields_data}: {action_url: string, fields_data: FieldData[]}) {
-    const [valuesArr, setValuesArr] = useState<any[]>(["Hello", "World"])
+    const [valuesArr, setValuesArr] = useState<any[]>(new Array(fields_data.length))
 
     function produceSetValueFunction(index: number) {
         const func = (newValue: any) => {
-            setValuesArr([...valuesArr.slice(0, index), newValue, ...valuesArr.slice(index+1)])
+            setValuesArr(valuesArr.with(index, newValue))
+            // setValuesArr([...valuesArr.slice(0, index), newValue, ...valuesArr.slice(index+1)])
         }
         return func
     }
