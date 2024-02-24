@@ -1,11 +1,17 @@
 import "./Form.css"
 import { FieldData } from "../../types/Field.interface"
 import Input from "../Input/Input"
+import Button from "../Button/Button"
 import { useState} from "react"
 import axios from "axios"
 
-export default function Form({action_url, fields_data}: {action_url: string, fields_data: FieldData[]}) {
-    const [valuesArr, setValuesArr] = useState<any[]>(new Array(fields_data.length))
+type FormProps = {
+    action_url: string, 
+    fields_data: FieldData[]
+}
+
+export default function Form({action_url, fields_data}: FormProps) {
+    const [valuesArr, setValuesArr] = useState<any[]>(new Array(fields_data.length).fill(''))
 
     function produceSetValueFunction(index: number) {
         const func = (newValue: any) => {
@@ -16,7 +22,10 @@ export default function Form({action_url, fields_data}: {action_url: string, fie
     }
 
     function sendRequest() {
-        axios.post(action_url, console.log(Object.fromEntries(valuesArr.map((k, i) => [fields_data[i].requestFieldName, k])))        )
+        const mapped = valuesArr.map((k, i) => [fields_data[i].requestFieldName, k])
+        if (mapped[0] !== undefined) {
+            axios.post(action_url, Object.fromEntries(mapped))
+        }
     }
 
     return (
@@ -29,13 +38,7 @@ export default function Form({action_url, fields_data}: {action_url: string, fie
                     setValue={produceSetValueFunction(index)}
                 />
             })}
-
-            {valuesArr.map((value, index) => {
-                return (
-                    <p key={index}>{index}: {value}</p>
-                )
-            })}
-            <button className="custom_form__button" onClick={sendRequest}>Submit</button>
+            <Button onClick={sendRequest}>Submit</Button>
         </div>
     )
 }

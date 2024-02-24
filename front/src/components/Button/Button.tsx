@@ -1,7 +1,8 @@
 import "./Button.css"
+import { ComponentProps, ReactNode } from 'react'
 
-export default function Button() {
+export default function Button(props: ComponentProps<'button'>) {
     return (
-        <button className="custom_button"></button>
+        <button {...props} className="custom_button">{props.children}</button>
     )
 }
