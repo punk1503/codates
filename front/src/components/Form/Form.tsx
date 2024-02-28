@@ -16,7 +16,6 @@ export default function Form({action_url, fields_data}: FormProps) {
     function produceSetValueFunction(index: number) {
         const func = (newValue: any) => {
             setValuesArr(valuesArr.with(index, newValue))
-            // setValuesArr([...valuesArr.slice(0, index), newValue, ...valuesArr.slice(index+1)])
         }
         return func
     }
