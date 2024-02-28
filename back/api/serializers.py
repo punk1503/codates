@@ -9,3 +9,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
+
+class CustomUserGradesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUserGrades
+        fields = '__all__'
