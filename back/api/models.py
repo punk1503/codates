@@ -16,13 +16,16 @@ class CustomUser(AbstractUser):
     city = models.CharField(choices=cities, max_length=255)
 
     def match(self) -> 'CustomUser':
-        """
+        '''
         Метод для поиска подходящего пользователя на основе рейтинга.
 
         Returns:
             CustomUser: Наиболее подходящий пользователь.
-        """
-        return CustomUserRankings.objects.order_by('-rank')[0].user2
+        '''
+        matched_rankings = CustomUserRankings.objects.order_by('-rank')
+        if matched_rankings:
+            return matched_rankings[0].user2
+        return None
 
 class CustomUserToImage(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -53,7 +56,7 @@ class CustomUserRankings(models.Model):
 
     @staticmethod
     def get_rank(user1: CustomUser, user2: CustomUser) -> int:
-        """
+        '''
         Метод для вычисления рейтинга совпадения между двумя пользователями.
 
         Args:
@@ -62,7 +65,7 @@ class CustomUserRankings(models.Model):
 
         Returns:
             int: Рейтинг совпадения.
-        """
+        '''
         rank = 0
         # Оценка на основе совпадения города
         if user1.city == user2.city:
@@ -83,7 +86,7 @@ class CustomUserRankings(models.Model):
     
     @staticmethod
     def rank_user(user: CustomUser) -> None:
-        """
+        '''
         Метод для ранжирования пользователей.
 
         Args:
@@ -91,7 +94,7 @@ class CustomUserRankings(models.Model):
 
         Returns:
             None
-        """
+        '''
         # Создаем список рейтингов для всех пользователей, исключая текущего пользователя
         ranking = [CustomUserRankings.objects.create(user1=user, user2=user2) for user2 in CustomUser.objects.exclude(id=user.id)]
         
@@ -102,12 +105,12 @@ class CustomUserRankings(models.Model):
 
     @staticmethod
     def rank_users() -> None:
-        """
+        '''
         Метод для ранжирования всех пользователей в системе.
 
         Returns:
             None
-        """
+        '''
         # Ранжируем каждого пользователя в системе
         for user in CustomUser.objects.all():
             CustomUserRankings.rank_user(user)
