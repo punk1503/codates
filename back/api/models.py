@@ -15,6 +15,11 @@ class CustomUser(AbstractUser):
     gender = models.BooleanField() # true for male, false for female
     city = models.CharField(choices=cities, max_length=255)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        CustomUserRankings.rank_user(self)
+
+
     def match(self) -> 'CustomUser':
         '''
         Метод для поиска подходящего пользователя на основе рейтинга.
@@ -96,8 +101,7 @@ class CustomUserRankings(models.Model):
             None
         '''
         # Создаем список рейтингов для всех пользователей, исключая текущего пользователя
-        ranking = [CustomUserRankings.objects.get_or_create(user1=user, user2=user2) for user2 in CustomUser.objects.exclude(id=user.id)]
-        
+        ranking = [CustomUserRankings.objects.get_or_create(user1=user, user2=user2)[0] for user2 in CustomUser.objects.exclude(id=user.id)]
         # Рассчитываем рейтинг для каждой пары пользователей
         for i in range(len(ranking)):
             ranking[i].rank = CustomUserRankings.get_rank(user1=user, user2=ranking[i].user2)
