@@ -96,7 +96,7 @@ class CustomUserRankings(models.Model):
             None
         '''
         # Создаем список рейтингов для всех пользователей, исключая текущего пользователя
-        ranking = [CustomUserRankings.objects.create(user1=user, user2=user2) for user2 in CustomUser.objects.exclude(id=user.id)]
+        ranking = [CustomUserRankings.objects.get_or_create(user1=user, user2=user2) for user2 in CustomUser.objects.exclude(id=user.id)]
         
         # Рассчитываем рейтинг для каждой пары пользователей
         for i in range(len(ranking)):
