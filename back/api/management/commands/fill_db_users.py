@@ -2,7 +2,7 @@ from typing import Any
 from django.core.management import BaseCommand
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from api.models import Technology  # Замените "myapp" на имя вашего приложения
+from api.models import Technology, CustomUser
 from faker import Faker
 import random
 import json
@@ -28,18 +28,24 @@ class Command(BaseCommand):
             users = []
             for _ in range(num_users):
                 user_data = {
-                    "username": fake.user_name(),
+                    "username": fake.unique.user_name(),
                     "telephone_number": fake.phone_number(),
                     "age": random.randint(18, 65),
-                    "gender": random.choice(['male', 'female']),
-                    "city": random.choice(['Moscow', 'St. Petersburg', 'Perm', 'Nizhny Novgorod']),
-                    "technologies": [tech.name for tech in get_random_technologies()]
+                    "gender": random.choice([True, False]),
+                    "city": random.choice(CustomUser.cities),
+                    "technologies": [tech for tech in get_random_technologies()]
                 }
                 users.append(user_data)
+            
+            for user in users:
+                tech = user.pop('technologies')
+                user = CustomUser.objects.create(**user)
+                [user.technologies.add(t) for t in tech]
+                user.save()
             return users
 
         # Генерируем пользователей
-        users_data = generate_users(1000)  # Замените 10 на нужное количество пользователей
+        users_data = generate_users(1000)
 
         # Сохраняем пользователей в файл JSON
         with open('users.json', 'w') as f:

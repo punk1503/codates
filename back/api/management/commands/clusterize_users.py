@@ -6,11 +6,15 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
+import pandas as pd
 
 class Command(BaseCommand):
     def handle(self, *args: Any, **options: Any) -> str | None:
-        clusters_number = args[0]
         users = CustomUser.objects.all()
+
+        # Создаем DataFrame на основе данных о пользователях
+        user_data = [[user.city, user.age] for user in users]
+        df = pd.DataFrame(user_data, columns=['city', 'age'])
 
         # Определяем категориальные и числовые признаки
         categorical_features = ['city']
@@ -25,11 +29,11 @@ class Command(BaseCommand):
                 ('num', SimpleImputer(strategy='median'), numerical_features)
             ])
 
-        # Преобразуем пользователей в матрицу признаков
-        X = preprocessor.fit_transform([[user.city, user.age] for user in users])
+        # Преобразуем данные о пользователях в матрицу признаков
+        X = preprocessor.fit_transform(df)
 
         # Определяем количество кластеров (может потребоваться оптимизация этого параметра)
-        n_clusters = clusters_number
+        n_clusters = 4
 
         # Инициализируем и обучаем модель кластеризации
         kmeans = KMeans(n_clusters=n_clusters)
@@ -40,4 +44,6 @@ class Command(BaseCommand):
 
         # Выводим результаты кластеризации
         for user, label in zip(users, cluster_labels):
+            user.cluster = label
+            user.save()
             print(f"User {user.id} belongs to cluster {label}")
