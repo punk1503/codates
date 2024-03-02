@@ -1,0 +1,252 @@
+[
+    {
+        "name": "Python",
+        "background_color": "#3776AB",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "JavaScript",
+        "background_color": "#F7DF1E",
+        "text_color": "#000000"
+    },
+    {
+        "name": "Java",
+        "background_color": "#007396",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "C++",
+        "background_color": "#00599C",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Ruby",
+        "background_color": "#CC342D",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Swift",
+        "background_color": "#FFAC45",
+        "text_color": "#000000"
+    },
+    {
+        "name": "PHP",
+        "background_color": "#777BB4",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Go",
+        "background_color": "#00ADD8",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Rust",
+        "background_color": "#000000",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "TypeScript",
+        "background_color": "#3178C6",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Kotlin",
+        "background_color": "#F18E33",
+        "text_color": "#000000"
+    },
+    {
+        "name": "HTML",
+        "background_color": "#E44D26",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "CSS",
+        "background_color": "#264DE4",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "SQL",
+        "background_color": "#FFD700",
+        "text_color": "#000000"
+    },
+    {
+        "name": "Scala",
+        "background_color": "#DC322F",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Perl",
+        "background_color": "#0298c3",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Objective-C",
+        "background_color": "#438eff",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Assembly",
+        "background_color": "#6E4C13",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "R",
+        "background_color": "#198CE7",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Dart",
+        "background_color": "#00B4AB",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "VB.NET",
+        "background_color": "#1A6DB0",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Shell",
+        "background_color": "#89e051",
+        "text_color": "#000000"
+    },
+    {
+        "name": "Lua",
+        "background_color": "#000080",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "MATLAB",
+        "background_color": "#365FB7",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Groovy",
+        "background_color": "#4298B8",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Objective-J",
+        "background_color": "#ff0c5a",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "ActionScript",
+        "background_color": "#874CBF",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "CoffeeScript",
+        "background_color": "#244776",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Haskell",
+        "background_color": "#5e5086",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "F#",
+        "background_color": "#b845fc",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Clojure",
+        "background_color": "#db5855",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Erlang",
+        "background_color": "#B83998",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "COBOL",
+        "background_color": "#000080",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Pascal",
+        "background_color": "#E3F171",
+        "text_color": "#000000"
+    },
+    {
+        "name": "ABAP",
+        "background_color": "#E82729",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Visual Basic",
+        "background_color": "#945DB7",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Ada",
+        "background_color": "#02f88c",
+        "text_color": "#000000"
+    },
+    {
+        "name": "Scheme",
+        "background_color": "#1e4aec",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Lisp",
+        "background_color": "#3fb68b",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Prolog",
+        "background_color": "#74283c",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Kotlin",
+        "background_color": "#F18E33",
+        "text_color": "#000000"
+    },
+    {
+        "name": "C",
+        "background_color": "#A8B9CC",
+        "text_color": "#000000"
+    },
+    {
+        "name": "C#",
+        "background_color": "#178600",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Visual Basic .NET",
+        "background_color": "#945DB7",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Objective-C",
+        "background_color": "#438eff",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "PHP",
+        "background_color": "#777BB4",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "SQL",
+        "background_color": "#FFD700",
+        "text_color": "#000000"
+    },
+    {
+        "name": "Swift",
+        "background_color": "#FFAC45",
+        "text_color": "#000000"
+    },
+    {
+        "name": "Perl",
+        "background_color": "#0298c3",
+        "text_color": "#FFFFFF"
+    },
+    {
+        "name": "Assembly",
+        "background_color": "#6E4",
+        "text_color": "#000"
+    }
+]

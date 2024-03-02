@@ -17,10 +17,6 @@ class CustomUser(AbstractUser):
     images = models.ManyToManyField('ProfileImage')
     technologies = models.ManyToManyField('Technology')
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-
     def match(self) -> 'CustomUser':
         '''
         Метод для поиска подходящего пользователя на основе рейтинга.
