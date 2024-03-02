@@ -14,10 +14,9 @@ class CustomUser(AbstractUser):
     age = models.IntegerField(null=False, blank=False)
     gender = models.BooleanField() # true for male, false for female
     city = models.CharField(choices=cities, max_length=255)
-
+    
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        CustomUserRankings.rank_user(self)
 
 
     def match(self) -> 'CustomUser':
