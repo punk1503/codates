@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useEffect } from 'react'
 import './App.css'
 import AppRoutes from './router'
 import Axios from './utils/axiosConfig'
