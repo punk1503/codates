@@ -2,13 +2,8 @@ import "./Form.css"
 import { FieldData } from "../../types/Field.interface"
 import Input from "../Input/Input"
 import Button from "../Button/Button"
-<<<<<<< Updated upstream
-import { useState} from "react"
-import axios from "axios"
-=======
 import { useState } from "react"
 import Axios from "../../utils/axiosConfig"
->>>>>>> Stashed changes
 
 type FormProps = {
     action_url: string, 
