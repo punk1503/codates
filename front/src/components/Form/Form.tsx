@@ -2,7 +2,7 @@ import "./Form.css"
 import { FieldData } from "../../types/Field.interface"
 import Input from "../Input/Input"
 import Button from "../Button/Button"
-import { useState} from "react"
+import { useState } from "react"
 import axios from "axios"
 
 type FormProps = {
