@@ -1,9 +1,30 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db.models import Q
 from sklearn.cluster import KMeans
 import numpy as np
+
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, **kwargs):
+        technologies = kwargs.pop('technologies')
+        print(technologies)
+        new_user = self.model(**kwargs)
+        new_user.set_password(kwargs['password'])
+
+        # Save the user before setting the many-to-many relationship
+        new_user.save(using=self._db)
+
+        # Set the many-to-many relationship after saving the user
+        new_user.technologies.set(technologies)
+        
+        new_user.cluster = self.get_cluster(new_user)
+        return new_user
+
+    @staticmethod
+    def get_cluster(user: 'CustomUser') -> int:
+        return 0
 
 class CustomUser(AbstractUser):
     cities = [
@@ -116,17 +137,8 @@ class CustomUser(AbstractUser):
     images = models.ManyToManyField('ProfileImage')
     technologies = models.ManyToManyField('Technology')
     cluster = models.IntegerField(null=True, blank=True)
-    
-    def create(cls, **kwargs):
-        new_user = cls(**kwargs)
-        new_user_features = np.array([kwargs.get('age'), kwargs.get('gender'), kwargs.get('city')] + [technology.name for technology in kwargs.get('technologies')])
-        X_new = new_user_features.reshape(1, -1)
-        kmeans = KMeans(n_clusters=4)
-        kmeans.fit(X_new)
-        new_user.cluster = kmeans.predict(X_new)[0]
-        print(new_user.cluster)
-        new_user.save()
-        return new_user
+
+    objects = CustomUserManager()
 
     def match(self) -> 'CustomUser':
         '''
