@@ -2,8 +2,13 @@ import "./Form.css"
 import { FieldData } from "../../types/Field.interface"
 import Input from "../Input/Input"
 import Button from "../Button/Button"
+<<<<<<< Updated upstream
 import { useState} from "react"
 import axios from "axios"
+=======
+import { useState } from "react"
+import Axios from "../../utils/axiosConfig"
+>>>>>>> Stashed changes
 
 type FormProps = {
     action_url: string, 
@@ -23,7 +28,11 @@ export default function Form({action_url, fields_data}: FormProps) {
     function sendRequest() {
         const mapped = valuesArr.map((k, i) => [fields_data[i].requestFieldName, k])
         if (mapped[0] !== undefined) {
-            axios.post(action_url, Object.fromEntries(mapped))
+            Axios.post(action_url, Object.fromEntries(mapped))
+            .then((response) => {
+            })
+            .catch((error) => {
+            })
         }
     }
 
@@ -37,7 +46,7 @@ export default function Form({action_url, fields_data}: FormProps) {
                     setValue={produceSetValueFunction(index)}
                 />
             })}
-            <Button onClick={sendRequest}>Submit</Button>
+            <Button onClick={() => {sendRequest()}}>Submit</Button>
         </div>
     )
 }

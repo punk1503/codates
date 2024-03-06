@@ -5,7 +5,7 @@ export default function LoginPage() {
     return (
         <>
             <Form
-                action_url="/signin/"
+                action_url="/drf-auth/login/"
                 fields_data={
                     [
                         {

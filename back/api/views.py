@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from .models import *
 from .serializers import *
 from django.contrib.auth import get_user_model
+from django.middleware.csrf import get_token
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
     '''
@@ -28,3 +29,8 @@ def get_matched_user(request):
     API ендпоинт для получения наиболее подходяшего пользователя (мэтч).
     '''
     return Response(CustomUserSerializer(request.user.match()).data)
+
+@api_view(['GET'])
+def get_csrf_token(request):
+    csrf_token = get_token(request)
+    return Response({'csrf_token': csrf_token})

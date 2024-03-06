@@ -4,7 +4,12 @@ from .models import *
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
+<<<<<<< Updated upstream
         fields = ['password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city']
+=======
+        fields = ['password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies', 'cluster']
+        read_only_fields = ['cluster']
+>>>>>>> Stashed changes
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
