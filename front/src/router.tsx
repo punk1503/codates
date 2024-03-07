@@ -12,9 +12,9 @@ type PrivateRouteProps = {
 function PrivateRoute({isForAuthenticated}: PrivateRouteProps) {
     const { pathname, search } = useLocation()
     const redirectRoute = new URLSearchParams(search).get('redirect') ?? '/'
-    const { user } = useAuth()
+    const { isAuthenticated } = useAuth()
     return (
-        !XOR(user, isForAuthenticated) ? <Outlet></Outlet> : <Navigate  to={!isForAuthenticated ? `${redirectRoute}` : `/signin/?redirect=${pathname}`}/>
+        !XOR(isAuthenticated, isForAuthenticated) ? <Outlet></Outlet> : <Navigate  to={!isForAuthenticated ? `${redirectRoute}` : `/signin/?redirect=${pathname}`}/>
     )
 }
 
