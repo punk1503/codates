@@ -13,7 +13,6 @@ function App() {
         Axios.defaults.headers.common['X-CSRFToken'] = Cookies.get('csrftoken')
       })
     }
-
     fetchCSRFToken()
   }, [])
 
