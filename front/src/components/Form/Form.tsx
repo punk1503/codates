@@ -7,10 +7,12 @@ import Axios from "../../utils/axiosConfig"
 
 type FormProps = {
     action_url: string, 
-    fields_data: FieldData[]
+    fields_data: FieldData[],
+    response_callback: any | undefined,
+    error_callback: any | undefined,
 }
 
-export default function Form({action_url, fields_data}: FormProps) {
+export default function Form({action_url, fields_data, response_callback, error_callback}: FormProps) {
     const [valuesArr, setValuesArr] = useState<any[]>(new Array(fields_data.length).fill(''))
 
     function produceSetValueFunction(index: number) {
@@ -25,8 +27,10 @@ export default function Form({action_url, fields_data}: FormProps) {
         if (mapped[0] !== undefined) {
             Axios.post(action_url, Object.fromEntries(mapped))
             .then((response) => {
+                error_callback ? response_callback(response) : null
             })
             .catch((error) => {
+                error_callback ? error_callback(error) : null
             })
         }
     }
