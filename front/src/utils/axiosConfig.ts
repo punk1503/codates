@@ -11,7 +11,7 @@ const Axios = axios.create({
 })
 
 Axios.interceptors.request.use(function (config) {
-    console.log(config)
+    console.log(JSON.stringify(config.data))
     return config;
   }, function (error) {
     console.warn(error)
@@ -19,7 +19,7 @@ Axios.interceptors.request.use(function (config) {
   });
 
 Axios.interceptors.response.use(function (response) {
-    console.log(response)
+    console.log(JSON.stringify(response.data))
     return response;
   }, function (error) {
     console.log(error)

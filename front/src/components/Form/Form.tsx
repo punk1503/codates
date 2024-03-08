@@ -23,7 +23,9 @@ export default function Form({action_url, fields_data, response_callback, error_
     }
 
     function sendRequest() {
-        const mapped = valuesArr.map((k, i) => [fields_data[i].requestFieldName, k])
+        const mapped = valuesArr.map((k, i) => {
+            return [fields_data[i].requestFieldName, k]
+        })
         if (mapped[0] !== undefined) {
             Axios.post(action_url, Object.fromEntries(mapped))
             .then((response) => {

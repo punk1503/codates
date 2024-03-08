@@ -2,23 +2,24 @@ import { useEffect, useState } from "react"
 import { CenteredBlock } from "../../components/Blocks"
 import Form from "../../components/Form"
 import Axios from "../../utils/axiosConfig"
+import reformToSelectData from "../../utils/reformToSelectData"
 
 export default function RegistrationPage() {
-    const [cities, setCities] = useState([])
-    const [technologies, setTechnologies] = useState([])
+    const [cities, setCities] = useState<CityReformed[]>([])
+    const [technologies, setTechnologies] = useState<TechnologyReformed[]>([])
 
     useEffect(() => {
         const fetchCitiesAndTechologies = () => {
-            Axios.get('cities/')
+            Axios.get<City[]>('cities/')
             .then((response) => {
-                setCities(Object.assign(response.data, {label: response.data.name, key: response.data.id}))
+                setCities(response.data.map((data) => {return reformToSelectData(data)}))
             })
             .catch((error) => {
             })
 
-            Axios.get('technologies/')
+            Axios.get<Technology[]>('technologies/')
             .then((response) => {
-                setTechnologies(response.data)
+                setTechnologies(response.data.map((data) => {return reformToSelectData(data)}))
             })
             .catch((error) => {
 
@@ -69,11 +70,11 @@ export default function RegistrationPage() {
                             choices: [
                                 {
                                     label: 'Мужской',
-                                    key: true,
+                                    value: true,
                                 },
                                 {
                                     label: 'Женский',
-                                    key: false,
+                                    value: false,
                                 },
                             ],
                             isSearchable: false,

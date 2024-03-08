@@ -6,6 +6,7 @@ import Select from 'react-select'
 
 export default function Input({data, value, setValue}: {data: FieldData, value: any, setValue: (value: any) => void}) {
     const [inputValue, setInputValue] = useState<any>()
+    
     function switchRenderInput() {
         switch (data.fieldType) {
             case 'text':
@@ -33,7 +34,7 @@ export default function Input({data, value, setValue}: {data: FieldData, value: 
                 return (
                     <div>
                         <label>{data.label}</label>
-                        <input type="number" min={1}></input>
+                        <input className="custom_input" type="number" min={1} value={value} onChange={(event) => {setValue(event.target.value)}}></input>
                     </div>
                 )
             case 'telephone':
@@ -47,14 +48,14 @@ export default function Input({data, value, setValue}: {data: FieldData, value: 
                 return (
                     <div>
                         <label>{data.label}</label>
-                        <Select isMulti={false} options={data.choices} isSearchable={data?.isSearchable}></Select>
+                        <Select value={value} onChange={setValue} isMulti={false} options={data.choices} isSearchable={data?.isSearchable}></Select>
                     </div>
                 )
             case 'choices_multi':
                 return (
                     <div>
                         <label>{data.label}</label>
-                        <Select isMulti={true} options={data.choices} isSearchable={data?.isSearchable}></Select>
+                        <Select value={value} onChange={setValue} isMulti={true} options={data.choices} isSearchable={data?.isSearchable}></Select>
                     </div>
                 )
             default:
