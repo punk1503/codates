@@ -11,7 +11,7 @@ export default function RegistrationPage() {
         const fetchCitiesAndTechologies = () => {
             Axios.get('cities/')
             .then((response) => {
-                setCities(response.data)
+                setCities(Object.assign(response.data, {label: response.data.name, key: response.data.id}))
             })
             .catch((error) => {
             })
@@ -93,7 +93,7 @@ export default function RegistrationPage() {
                             requestFieldName: 'city',
                             fieldType: 'choices',
                             isRequired: false,
-                            choices: technologies,
+                            choices: cities,
                             isSearchable: true
                         },
                         {

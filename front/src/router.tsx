@@ -27,8 +27,8 @@ function AppRoutes() {
                     </Route>
 
                     <Route element={<PrivateRoute isForAuthenticated={false} />}>
-                        <Route path="/signin" element={<RegistrationPage/>}></Route>
-                        <Route path="/signup" element={<LoginPage/>}></Route>
+                        <Route path="/signup" element={<RegistrationPage/>}></Route>
+                        <Route path="/signin" element={<LoginPage/>}></Route>
                     </Route>
 
                     <Route path="/" element={<MainPage/>}></Route>
