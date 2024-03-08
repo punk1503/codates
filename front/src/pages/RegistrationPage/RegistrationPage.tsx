@@ -1,6 +1,32 @@
+import { useEffect, useState } from "react"
 import { CenteredBlock } from "../../components/Blocks"
 import Form from "../../components/Form"
+import Axios from "../../utils/axiosConfig"
+
 export default function RegistrationPage() {
+    const [cities, setCities] = useState([])
+    const [technologies, setTechnologies] = useState([])
+
+    useEffect(() => {
+        const fetchCitiesAndTechologies = () => {
+            Axios.get('cities/')
+            .then((response) => {
+                setCities(response.data)
+            })
+            .catch((error) => {
+            })
+
+            Axios.get('technologies/')
+            .then((response) => {
+                setTechnologies(response.data)
+            })
+            .catch((error) => {
+
+            })
+        }
+
+        fetchCitiesAndTechologies()
+    }, [])
     return (
         <>
             <CenteredBlock>
@@ -11,13 +37,6 @@ export default function RegistrationPage() {
                             placeholder: 'username',
                             requestFieldName: 'username',
                             fieldType: 'text',
-                            isRequired: true
-                        },
-                        {
-                            label: 'Возраст',
-                            placeholder: '18+',
-                            requestFieldName: 'age',
-                            fieldType: 'age',
                             isRequired: true
                         },
                         {
@@ -33,6 +52,46 @@ export default function RegistrationPage() {
                             requestFieldName: 'telephone_number',
                             fieldType: 'telephone',
                             isRequired: true
+                        },
+                        {
+                            label: 'Возраст',
+                            placeholder: '18+',
+                            requestFieldName: 'age',
+                            fieldType: 'age',
+                            isRequired: true
+                        },
+                        {
+                            label: 'Пол',
+                            placeholder: 'Только мужчина/женщина',
+                            requestFieldName: 'gender',
+                            fieldType: 'choices',
+                            isRequired: true,
+                            choices: [
+                                {
+                                    value: 'Мужской',
+                                    key: true,
+                                },
+                                {
+                                    value: 'Женский',
+                                    key: false,
+                                },
+                            ]
+                        },
+                        {
+                            label: 'Технологии',
+                            placeholder: 'Ваши любимые языки программирования',
+                            requestFieldName: 'technologies',
+                            fieldType: 'choices_multi',
+                            isRequired: false,
+                            choices: technologies
+                        },
+                        {
+                            label: 'Город',
+                            placeholder: 'Ваши город',
+                            requestFieldName: 'city',
+                            fieldType: 'choices',
+                            isRequired: false,
+                            choices: technologies
                         },
                         {
                             label: 'Пароль',
