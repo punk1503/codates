@@ -27,10 +27,8 @@
             Axios.post('drf-auth/login', {username, password})
             .then((response) => {
                 setIsAuthenticated(true)
-                console.log(response)
             })
             .catch((error) => {
-                console.log(error)
             })
         }
 
@@ -41,10 +39,8 @@
         function register(user: User) {
             Axios.post('signup/', user)
             .then((response) => {
-                console.log(response)
             })
             .catch((error) => {
-                console.warn(error)
             })
         }
 
