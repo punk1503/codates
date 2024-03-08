@@ -1,6 +1,7 @@
 .custom_input {
     background-color: transparent;
-    border: 1.5px solid #7d7d7d;
-    border-radius: 1024px;
-    padding: 5px 15px;
+    border: 1px solid hsl(0, 0%, 80%);
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 13px;
 }

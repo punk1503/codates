@@ -4,6 +4,6 @@ export type FieldData = {
     requestFieldName: string,
     fieldType: 'text' | 'password' | 'email' | 'age' | 'telephone' | 'choices' | 'choices_multi'
     isRequired: boolean,
-    choices?: {value: string, key: any}[],
+    choices?: {label: string, key: any}[],
     isSearchable?: boolean,
 }

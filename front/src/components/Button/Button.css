@@ -1,10 +1,12 @@
 .custom_button {
+    font-size: 1.1em;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     border-radius: 1024px;
-    padding: 5px 15px;
+    border: none;
+    padding: 10px 15px;
     background-color: var(--color-main-blue);
     color: var(--color-main-white)
 }

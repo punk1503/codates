@@ -68,14 +68,15 @@ export default function RegistrationPage() {
                             isRequired: true,
                             choices: [
                                 {
-                                    value: 'Мужской',
+                                    label: 'Мужской',
                                     key: true,
                                 },
                                 {
-                                    value: 'Женский',
+                                    label: 'Женский',
                                     key: false,
                                 },
-                            ]
+                            ],
+                            isSearchable: false,
                         },
                         {
                             label: 'Технологии',
@@ -83,7 +84,8 @@ export default function RegistrationPage() {
                             requestFieldName: 'technologies',
                             fieldType: 'choices_multi',
                             isRequired: false,
-                            choices: technologies
+                            choices: technologies,
+                            isSearchable: true,
                         },
                         {
                             label: 'Город',
@@ -91,7 +93,8 @@ export default function RegistrationPage() {
                             requestFieldName: 'city',
                             fieldType: 'choices',
                             isRequired: false,
-                            choices: technologies
+                            choices: technologies,
+                            isSearchable: true
                         },
                         {
                             label: 'Пароль',
