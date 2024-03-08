@@ -27,6 +27,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 CORS_ALLOWED_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization']
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -144,5 +145,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
     ]
 }

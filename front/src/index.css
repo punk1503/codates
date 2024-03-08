@@ -2,7 +2,7 @@
 :root {
 /* colors */
   --text: hsl(247, 75%, 5%);
-  --text2: white;
+  --text2: hsl(0, 0%, 100%);
   --background: hsl(25, 100%, 94%);
   --primary: hsl(211, 100%, 45%);
   --secondary: hsl(211, 100%, 75%);
