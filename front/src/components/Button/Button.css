@@ -7,6 +7,6 @@
     border-radius: 1024px;
     border: none;
     padding: 10px 15px;
-    background-color: var(--color-main-blue);
-    color: var(--color-main-white)
+    background-color: var(--primary);
+    color: var(--text2)
 }

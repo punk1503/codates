@@ -1,12 +1,10 @@
 import "./Input.css"
 import { FieldData } from "../../types/Field.interface"
-import { useState } from "react"
 import PhoneInput from 'react-phone-number-input/input'
 import Select from 'react-select'
+import CustomSelect from "../CustomSelect"
 
 export default function Input({data, value, setValue}: {data: FieldData, value: any, setValue: (value: any) => void}) {
-    const [inputValue, setInputValue] = useState<any>()
-    
     function switchRenderInput() {
         switch (data.fieldType) {
             case 'text':
@@ -48,14 +46,14 @@ export default function Input({data, value, setValue}: {data: FieldData, value: 
                 return (
                     <div>
                         <label>{data.label}</label>
-                        <Select value={value} onChange={setValue} isMulti={false} options={data.choices} isSearchable={data?.isSearchable}></Select>
+                        <CustomSelect value={value} onChange={setValue} isMulti={false} options={data.choices} isSearchable={data?.isSearchable}></CustomSelect>
                     </div>
                 )
             case 'choices_multi':
                 return (
                     <div>
                         <label>{data.label}</label>
-                        <Select value={value} onChange={setValue} isMulti={true} options={data.choices} isSearchable={data?.isSearchable}></Select>
+                        <CustomSelect value={value} onChange={setValue} isMulti={true} options={data.choices} isSearchable={data?.isSearchable}></CustomSelect>
                     </div>
                 )
             default:

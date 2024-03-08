@@ -7,7 +7,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ['password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies']
 
     def create(self, validated_data):
+        technologies = validated_data.pop('technologies')
         user = CustomUser.objects.create_user(**validated_data)
+        user.technologies.set(technologies)
         return user
 
 class CustomUserGradesSerializer(serializers.ModelSerializer):

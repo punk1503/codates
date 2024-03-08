@@ -31,6 +31,7 @@ export default function RegistrationPage() {
     return (
         <>
             <CenteredBlock>
+                <h1>Регистрация</h1>
                 <Form action_url="signup/" fields_data={
                     [
                         {
