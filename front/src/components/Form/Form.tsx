@@ -8,11 +8,12 @@ import Axios from "../../utils/axiosConfig"
 type FormProps = {
     action_url: string, 
     fields_data: FieldData[],
+    submit_button_text: string,
     response_callback?: (any: any) => any,
     error_callback?: (any: any) => any,
 }
 
-export default function Form({action_url, fields_data, response_callback, error_callback}: FormProps) {
+export default function Form({action_url, fields_data, submit_button_text, response_callback, error_callback}: FormProps) {
     const [valuesArr, setValuesArr] = useState<any[]>(new Array(fields_data.length).fill(''))
 
     function produceSetValueFunction(index: number) {
@@ -47,7 +48,7 @@ export default function Form({action_url, fields_data, response_callback, error_
                     setValue={produceSetValueFunction(index)}
                 />
             })}
-            <Button onClick={() => {sendRequest()}}>Submit</Button>
+            <Button onClick={() => {sendRequest()}}>{submit_button_text}</Button>
         </div>
     )
 }

@@ -1,18 +1,22 @@
+import { useNavigate } from "react-router-dom"
 import Form from "../../components/Form/Form"
-import "./LoginPage.css"
+import { CenteredBlock } from "../../components/Blocks"
 
 export default function LoginPage() {
+    const navigate = useNavigate()
     return (
         <>
+        <CenteredBlock>
+            <h1>Вход</h1>
             <Form
                 action_url="/drf-auth/login/"
                 fields_data={
                     [
                         {
-                            label: 'Электронная почта',
-                            placeholder: 'example@email.ru',
-                            requestFieldName: 'email',
-                            fieldType: 'email',
+                            label: 'Имя пользователя',
+                            placeholder: 'username',
+                            requestFieldName: 'username',
+                            fieldType: 'text',
                             isRequired: true
                         },
                         {
@@ -24,7 +28,10 @@ export default function LoginPage() {
                         }
                     ]
                 }
+                submit_button_text="Вход"
+                response_callback={() => {navigate('/')}}
             ></Form>
+        </CenteredBlock>
         </>
     )
 }

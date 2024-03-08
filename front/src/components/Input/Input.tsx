@@ -1,7 +1,6 @@
 import "./Input.css"
 import { FieldData } from "../../types/Field.interface"
 import PhoneInput from 'react-phone-number-input/input'
-import Select from 'react-select'
 import CustomSelect from "../CustomSelect"
 
 export default function Input({data, value, setValue}: {data: FieldData, value: any, setValue: (value: any) => void}) {
@@ -32,7 +31,7 @@ export default function Input({data, value, setValue}: {data: FieldData, value: 
                 return (
                     <div>
                         <label>{data.label}</label>
-                        <input placeholder={data.placeholder} min={18} className="custom_input" type="number" min={1} value={value} onChange={(event) => {setValue(event.target.value)}}></input>
+                        <input placeholder={data.placeholder} min={18} className="custom_input" type="number" value={value} onChange={(event) => {setValue(event.target.value)}}></input>
                     </div>
                 )
             case 'telephone':
