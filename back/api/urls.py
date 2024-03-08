@@ -8,5 +8,7 @@ urlpatterns = [
     path('get-csrf-token/', get_csrf_token),
     path('grades/', CustomUserGradesCreateApiView.as_view()),
     path('match/', get_matched_user),
-    path('whoami/', whoami)
+    path('whoami/', whoami),
+    path('cities/', CityListAPIView.as_view()),
+    path('technologies/', TechnologyListAPIView.as_view()),
 ]

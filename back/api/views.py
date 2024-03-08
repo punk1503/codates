@@ -43,3 +43,19 @@ def whoami(request):
     API ендпоинт для получения данных о текущем пользователе.
     '''
     return request.user
+
+class CityListAPIView(generics.ListCreateAPIView):
+    '''
+    API ендпоинт для получения и создания городов.
+    '''
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+    permission_classes = [permissions.AllowAny]
+
+class TechnologyListAPIView(generics.ListCreateAPIView):
+    '''
+    API ендпоинт для получения и создания технологий.
+    '''
+    queryset = Technology.objects.all()
+    serializer_class = TechnologySerializer
+    permission_classes = [permissions.AllowAny]

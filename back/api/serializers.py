@@ -14,3 +14,13 @@ class CustomUserGradesSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUserGrades
         fields = '__all__'
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = ['id', 'name']
+
+class TechnologySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Technology
+        fields  = '__all__'
