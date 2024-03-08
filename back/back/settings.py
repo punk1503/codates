@@ -24,8 +24,12 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173',
-    'http://localhost:5173'
+    'http://localhost:5173',
 ]
+
+CORS_ALLOWED_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization']
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_NAME = 'csrftoken'
 
 CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:5173',
