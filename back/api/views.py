@@ -28,9 +28,18 @@ def get_matched_user(request):
     '''
     API ендпоинт для получения наиболее подходяшего пользователя (мэтч).
     '''
-    return Response(CustomUserSerializer(request.user.match()).data)
+    return Response(CustomUserSerializer(request.user.match()))
 
 @api_view(['GET'])
 def get_csrf_token(request):
+    '''
+    API ендпоинт для получения csrf токена.
+    '''
     csrf_token = get_token(request)
     return Response({'csrf_token': csrf_token})
+
+def whoami(request):
+    '''
+    API ендпоинт для получения данных о текущем пользователе.
+    '''
+    return request.user
