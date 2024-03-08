@@ -1,1 +1,1 @@
-export { default } from "./CenteredBlock/CenteredBlock"
+export { default as CenteredBlock } from "./CenteredBlock/CenteredBlock"

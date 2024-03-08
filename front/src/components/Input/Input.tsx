@@ -40,6 +40,20 @@ export default function Input({data, value, setValue}: {data: FieldData, value: 
                         <PhoneInput className="custom_input" defaultCountry={"RU"} placeholder={data.placeholder} value={value} onChange={setValue}></PhoneInput>
                     </div>
                 )
+            case 'choices':
+                return (
+                    <div>
+                        <label>{data.label}</label>
+                        <select name={data.requestFieldName}>
+                            <option value={''}>--Please choose an option--</option>
+                            {data.choices?.map((choice) => {
+                                return (
+                                    <option value={choice.key}>{choice.value}</option>
+                                )
+                            })}
+                        </select>
+                    </div>
+                )
             default:
                 return (
                     <label>NO SUCH INPUT TYPE</label>
