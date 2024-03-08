@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:700|Poppins:400');
 :root {
 /* colors */
   --text: hsl(247, 75%, 5%);
@@ -8,10 +9,10 @@
   --accent: hsl(317, 100%, 68%);
 }
 
-@import url('https://fonts.googleapis.com/css?family=Poppins:700|Poppins:400');
 
 body {
-  font-family: 'Poppins';
+  font-family: 'Poppins', sans-serif;
+
   font-weight: 400;
   color: var(--text);
   background-color: var(--background);

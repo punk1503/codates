@@ -8,8 +8,8 @@ import Axios from "../../utils/axiosConfig"
 type FormProps = {
     action_url: string, 
     fields_data: FieldData[],
-    response_callback: any | undefined,
-    error_callback: any | undefined,
+    response_callback?: (any: any) => any,
+    error_callback?: (any: any) => any,
 }
 
 export default function Form({action_url, fields_data, response_callback, error_callback}: FormProps) {
@@ -29,7 +29,7 @@ export default function Form({action_url, fields_data, response_callback, error_
         if (mapped[0] !== undefined) {
             Axios.post(action_url, Object.fromEntries(mapped))
             .then((response) => {
-                error_callback ? response_callback(response) : null
+                response_callback ? response_callback(response) : null
             })
             .catch((error) => {
                 error_callback ? error_callback(error) : null

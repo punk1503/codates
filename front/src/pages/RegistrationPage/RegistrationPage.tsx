@@ -3,10 +3,12 @@ import { CenteredBlock } from "../../components/Blocks"
 import Form from "../../components/Form"
 import Axios from "../../utils/axiosConfig"
 import reformToSelectData from "../../utils/reformToSelectData"
+import { useNavigate } from "react-router-dom"
 
 export default function RegistrationPage() {
     const [cities, setCities] = useState<CityReformed[]>([])
     const [technologies, setTechnologies] = useState<TechnologyReformed[]>([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchCitiesAndTechologies = () => {
@@ -107,7 +109,7 @@ export default function RegistrationPage() {
                         },
                         
                     ]
-                } response_callback={() => {}} error_callback={() => {}}></Form>
+                } response_callback={() => {navigate('/')}}></Form>
             </CenteredBlock>
         </>
     )

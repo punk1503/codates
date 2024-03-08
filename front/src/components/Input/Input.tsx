@@ -32,7 +32,7 @@ export default function Input({data, value, setValue}: {data: FieldData, value: 
                 return (
                     <div>
                         <label>{data.label}</label>
-                        <input className="custom_input" type="number" min={1} value={value} onChange={(event) => {setValue(event.target.value)}}></input>
+                        <input placeholder={data.placeholder} min={18} className="custom_input" type="number" min={1} value={value} onChange={(event) => {setValue(event.target.value)}}></input>
                     </div>
                 )
             case 'telephone':
