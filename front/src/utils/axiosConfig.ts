@@ -12,7 +12,7 @@ const Axios = axios.create({
 })
 
 Axios.interceptors.request.use(function (config) {
-    console.log(config.data)
+    console.log(config)
     return config;
   }, function (error) {
     console.warn(error)
@@ -20,7 +20,7 @@ Axios.interceptors.request.use(function (config) {
   });
 
 Axios.interceptors.response.use(function (response) {
-    console.log(response.data)
+    console.log(response)
     return response;
   }, function (error) {
     console.log(error)

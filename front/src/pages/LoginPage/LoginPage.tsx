@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import Form from "../../components/Form/Form"
 import { CenteredBlock } from "../../components/Blocks"
-import { useAuth } from "../../context/AuthContext"
 
 export default function LoginPage() {
     const navigate = useNavigate()
