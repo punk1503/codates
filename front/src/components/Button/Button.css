@@ -1,4 +1,6 @@
 .custom_button {
+    all: unset;
+    width: max-content;
     font-size: 1.1em;
     display: flex;
     flex-direction: row;

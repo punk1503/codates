@@ -4,6 +4,7 @@
     max-width: 400px;
     gap: 15px;
     padding: 15px;
+    align-items: center;
 }
 
 .custom_form > * {
