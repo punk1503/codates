@@ -29,7 +29,7 @@ export default function LoginPage() {
                     ]
                 }
                 submit_button_text="Вход"
-                // response_callback={(response) => {navigate('/')}}
+                response_callback={() => {navigate('/')}}
             ></Form>
         </CenteredBlock>
         </>

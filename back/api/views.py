@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .models import *
 from .serializers import *
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.middleware.csrf import get_token
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
@@ -80,3 +80,9 @@ class CustomLoginView(views.APIView):
             return response
         else:
             return Response({'error': 'Неверные учетные данные'}, status=401)
+
+@permission_classes([permissions.AllowAny])
+@api_view(['GET'])
+def logout_view(request):
+    logout(request)
+    return Response(status=status.HTTP_200_OK)

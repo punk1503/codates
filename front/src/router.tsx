@@ -1,10 +1,11 @@
-import { BrowserRouter, Route, Routes, Outlet, Navigate, useLocation } from "react-router-dom"
+import { BrowserRouter, Route, Routes, Outlet, Navigate, useLocation, useNavigate } from "react-router-dom"
 import XOR from "./utils/XOR"
 import { useAuth } from "./context/AuthContext"
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import MainPage from "./pages/MainPage/MainPage"
 import MatchingPage from "./pages/MatchingPage/MatchingPage"
+import LogoutPage from "./pages/LogoutPage"
 
 type PrivateRouteProps = {
     isForAuthenticated: boolean,
@@ -39,6 +40,7 @@ function AppRoutes() {
                         нужно будет переместить его первый роут 
                     */}
                     <Route path="/matching" element={<MatchingPage/>}></Route>
+                    <Route path="/logout" element={<LogoutPage/>}></Route>
 
                 </Routes>
             </BrowserRouter>
