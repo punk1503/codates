@@ -1,3 +1,6 @@
+:root {
+    --card-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
 .code_block {
     width: 100%;
     height: 100%;
@@ -9,13 +12,13 @@
 }
 
 .card_block {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-auto-flow: row;
     justify-content: center;
     align-items: center;
     width: 400px;
     margin: auto;
-    gap: 15px;
+    row-gap: 15px;
 }
 
 .buttons_block {
@@ -33,30 +36,30 @@
 }
 
 .action_button--like {
-    background-color: rgb(15, 29, 16);
+    background-color: hsl(124, 32%, 75%);
 }
 
 .action_button--dis {
-    background-color: rgb(35, 4, 2);
+    background-color: hsl(4, 89%, 75%);
 }
 
 .action_button--flip {
-    background-color: rgb(2, 4, 35);
+    background-color: var(--secondary);
 }
 
 .action_button--like > * {
-    fill: rgb(65, 135, 74);
+    fill: hsl(128, 35%, 39%);
 }
 .action_button--dis > * {
-    fill: rgb(173, 40, 15);;
+    fill: hsl(9, 84%, 39%);;
 }
 .action_button--flip > * {
-    fill: hsl(210, 100%, 52%);
+    fill: var(--primary);
 }
 
 .back {
     overflow: hidden;
-    background-color: #202023;
+    background-color: var(--background2);
     max-width: 400px;
     width: 100%;
     border-radius: 25px;
@@ -65,10 +68,12 @@
     backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    box-shadow: var(--card-shadow);
 }
 
 .wrapper {
     display: grid;
+    width: 100%;
 }
 
 .wrapper > * {
@@ -84,8 +89,8 @@
 }
 
 .card {
-    color: white;
-    background-color: #202023;
+    color: var(--text);
+    background-color: var(--background2);
     max-width: 400px;
     width: 100%;
     border-radius: 25px;
@@ -94,6 +99,7 @@
     backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    box-shadow: var(--card-shadow);
 }
 
 .card--left-tilt {
@@ -110,7 +116,7 @@
     height: 400px;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 40px;
+    grid-template-rows: 1fr 64px;
 }
 
 .card__bottom {
@@ -118,8 +124,8 @@
     flex-direction: column;
     gap: 10px;
     padding: 25px;
-    background-color: #202023;
-    color: #fff;
+    background-color: var(--background2);
+    color: var(--text);
 }
 
 .card__name {
@@ -127,10 +133,14 @@
     text-align: start;
     grid-column: 1;
     grid-row: 2;
-    background: rgb(32,32,35);
-    background: linear-gradient(180deg, rgba(32,32,35,0) 0%, rgba(32,32,35,1) 100%);
+    background: var(--background2);
+    background: linear-gradient(180deg, rgba(32,32,35,0) 0%, var(--background2) 100%);
     padding: 0 25px;
     margin: 0;
+    font-style: italic;
+    font-size: 1.5rem;
+    align-items: center;
+    display: flex;
 }
 
 .card__age {
@@ -234,4 +244,29 @@
 
 .photo_map > div.checked {
     background-color: hsl(0, 0%, 100%)!important;
+}
+
+.fake_card {
+    width: 100%;
+    height: 100%;
+    transform: rotate(15deg);
+    background-color: var(--background2);
+    border-radius: 25px;
+    z-index: -1;
+    box-shadow: var(--card-shadow);
+}
+
+.fake_card:first-child {
+    z-index: 0;
+    transform: rotate(0deg);
+}
+
+.fake_card:last-child {
+    transform: rotate(-15deg);
+    z-index: -2;
+}
+
+.buttons_block:has(.action_button--dis:hover) ~ .wrapper {
+    transform: translate(-20px,  20px);
+    transform: rotate(35deg);
 }

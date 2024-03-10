@@ -4,6 +4,7 @@ import { useAuth } from "./context/AuthContext"
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 import MainPage from "./pages/MainPage/MainPage"
+import MatchingPage from "./pages/MatchingPage/MatchingPage"
 
 type PrivateRouteProps = {
     isForAuthenticated: boolean,
@@ -32,6 +33,12 @@ function AppRoutes() {
                     </Route>
 
                     <Route path="/" element={<MainPage/>}></Route>
+
+                    {/*
+                        этот маршрут стоит здесь только для тестирования.
+                        нужно будет переместить его первый роут 
+                    */}
+                    <Route path="/matching" element={<MatchingPage/>}></Route>
 
                 </Routes>
             </BrowserRouter>

@@ -1,5 +1,5 @@
 type Technology = {
-    id: number,
+    id?: number,
     name: string,
     background_color: string,
     font_color: string,

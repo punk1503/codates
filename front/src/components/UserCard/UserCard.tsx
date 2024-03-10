@@ -97,6 +97,9 @@ function UserCard({ name, age, description, photos, technologies, code, theme }:
             <code className="code_block">{code}</code>
           </pre>
         </div>
+        <div className="fake_card"></div>
+        <div className="fake_card"></div>
+        <div className="fake_card"></div>
       </div>
       <div className="buttons_block">
         <button className="action_button action_button--like">
