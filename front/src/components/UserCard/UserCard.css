@@ -71,13 +71,24 @@
     box-shadow: var(--card-shadow);
 }
 
+.large_card_grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+}
+
+.large_card_grid > * {
+    grid-area: 1 / 1;
+}
+
 .wrapper {
     display: grid;
     width: 100%;
+    height: 100%;
 }
 
 .wrapper > * {
-    grid-area: 1/1;
+    grid-area: 1 / 1;
 }
 
 .card--flipped {
@@ -89,13 +100,17 @@
 }
 
 .card {
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
     color: var(--text);
     background-color: var(--background2);
     max-width: 400px;
     width: 100%;
     border-radius: 25px;
     overflow: hidden;
-    transition: transform 0.5s ease; /* Добавляем анимацию для плавного перехода */
+    transition: transform 0.5s ease;
     backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -266,7 +281,7 @@
     z-index: -2;
 }
 
-.buttons_block:has(.action_button--dis:hover) ~ .wrapper {
+.buttons_block:has(.action_button--dis:hover) + .wrapper {
     transform: translate(-20px,  20px);
     transform: rotate(35deg);
 }

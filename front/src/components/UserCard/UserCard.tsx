@@ -67,35 +67,37 @@ function UserCard({ name, age, description, photos, technologies, code, theme }:
 
   return (
     <div className="card_block">
-      <div className="wrapper">
-        <div className={"card " + (isFlipped ? "card--flipped" : "")}>
-          <div className="card__top">
-            <PhotoGallery photos={photos}></PhotoGallery>
-            <h2 className="card__name">
-              {name}, <span className="card__age">{age}</span>
-            </h2>
-          </div>
-          <div className="card__bottom">
-            <div className="tech__bar">
-              {technologies?.map((tech, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="tech"
-                    style={{ backgroundColor: tech.background_color, color: tech.font_color }}
-                  >
-                    {tech.name}
-                  </div>
-                );
-              })}
+      <div className="large_card_grid">
+        <div className="wrapper">
+          <div className={"card " + (isFlipped ? "card--flipped" : "")}>
+            <div className="card__top">
+              <PhotoGallery photos={photos}></PhotoGallery>
+              <h2 className="card__name">
+                {name}, <span className="card__age">{age}</span>
+              </h2>
             </div>
-            <div className="card_description">{description}</div>
+            <div className="card__bottom">
+              <div className="tech__bar">
+                {technologies?.map((tech, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="tech"
+                      style={{ backgroundColor: tech.background_color, color: tech.font_color }}
+                    >
+                      {tech.name}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="card_description">{description}</div>
+            </div>
           </div>
-        </div>
-        <div className={"back " + (isFlipped ? "back--flipped" : "")}>
-          <pre className="code_block">
-            <code className="code_block">{code}</code>
-          </pre>
+          <div className={"back " + (isFlipped ? "back--flipped" : "")}>
+            <pre className="code_block">
+              <code className="code_block">{code}</code>
+            </pre>
+          </div>
         </div>
         <div className="fake_card"></div>
         <div className="fake_card"></div>
