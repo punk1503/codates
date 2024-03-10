@@ -1,13 +1,13 @@
-import { User } from "../types/User.interface"
-import Axios from "../utils/axiosConfig"
 import { ReactNode, createContext, useContext, useState } from "react"
 
 type AuthContextType = {
     isAuthenticated: boolean,
+    setIsAuthenticated: (newValue: boolean) => any
 }
 
 const authContext = createContext<AuthContextType>({
     isAuthenticated: false,
+    setIsAuthenticated: (newValue: boolean) => {}
 });
 
 type AuthProviderProps = {
@@ -18,7 +18,7 @@ export function AuthProvider({children}: AuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     return (
-        <authContext.Provider value={{isAuthenticated}}>
+        <authContext.Provider value={{isAuthenticated, setIsAuthenticated}}>
             {children}
         </authContext.Provider>
     )

@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from rest_framework import permissions, viewsets, generics
+from rest_framework import permissions, generics, status, views
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from .models import *
 from .serializers import *
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate, login
 from django.middleware.csrf import get_token
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
@@ -59,3 +58,25 @@ class TechnologyListAPIView(generics.ListCreateAPIView):
     queryset = Technology.objects.all()
     serializer_class = TechnologySerializer
     permission_classes = [permissions.AllowAny]
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def check_auth(request):
+    if request.user.is_authenticated:
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+class CustomLoginView(views.APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Устанавливаем идентификатор сессии в куки
+            response = Response({'message': 'Вход успешен'})
+            response.set_cookie(key='sessionid', value=request.session.session_key)
+            return response
+        else:
+            return Response({'error': 'Неверные учетные данные'}, status=401)

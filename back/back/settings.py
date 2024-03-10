@@ -28,11 +28,12 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-CORS_ALLOWED_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization']
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CORS_ALLOWED_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization', 'Set-Cookie']
 CSRF_COOKIE_NAME = 'csrftoken'
 CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SAMESITE = 'None'
 
 CORS_ORIGIN_WHITELIST = [

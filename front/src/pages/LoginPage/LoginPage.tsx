@@ -4,13 +4,12 @@ import { CenteredBlock } from "../../components/Blocks"
 
 export default function LoginPage() {
     const navigate = useNavigate()
-
     return (
         <>
         <CenteredBlock>
             <h1>Вход</h1>
             <Form
-                action_url="/drf-auth/login/"
+                action_url="signin/"
                 fields_data={
                     [
                         {
@@ -30,7 +29,7 @@ export default function LoginPage() {
                     ]
                 }
                 submit_button_text="Вход"
-                response_callback={() => {navigate('/')}}
+                // response_callback={(response) => {navigate('/')}}
             ></Form>
         </CenteredBlock>
         </>
