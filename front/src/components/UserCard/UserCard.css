@@ -1,0 +1,237 @@
+.code_block {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    word-wrap: normal;
+    tab-size: 0.5rem;
+    text-align: start;
+}
+
+.card_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    margin: auto;
+    gap: 15px;
+}
+
+.buttons_block {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.action_button {
+    border: none;
+    width: 80px;
+    aspect-ratio: 1 / 1;
+    border-radius: 1024px;
+    background-color: hsl(0, 0%, 96%);
+}
+
+.action_button--like {
+    background-color: rgb(15, 29, 16);
+}
+
+.action_button--dis {
+    background-color: rgb(35, 4, 2);
+}
+
+.action_button--flip {
+    background-color: rgb(2, 4, 35);
+}
+
+.action_button--like > * {
+    fill: rgb(65, 135, 74);
+}
+.action_button--dis > * {
+    fill: rgb(173, 40, 15);;
+}
+.action_button--flip > * {
+    fill: hsl(210, 100%, 52%);
+}
+
+.back {
+    overflow: hidden;
+    background-color: #202023;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 25px;
+    transition: transform 0.5s ease; /* Добавляем анимацию для плавного перехода */
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.wrapper {
+    display: grid;
+}
+
+.wrapper > * {
+    grid-area: 1/1;
+}
+
+.card--flipped {
+    transform: rotateY(180deg);
+}
+
+.back--flipped {
+    transform: rotateY(0)!important;
+}
+
+.card {
+    color: white;
+    background-color: #202023;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+    transition: transform 0.5s ease; /* Добавляем анимацию для плавного перехода */
+    backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.card--left-tilt {
+    transform: rotate(-45deg);
+    transform: translate(-40px, 20px);
+}
+
+.card--right-tilt {
+    transform: rotate(-45deg);
+    transform: translate(40px, 20px);
+}
+
+.card__top {
+    height: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 40px;
+}
+
+.card__bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px;
+    background-color: #202023;
+    color: #fff;
+}
+
+.card__name {
+    font-weight: 500;
+    text-align: start;
+    grid-column: 1;
+    grid-row: 2;
+    background: rgb(32,32,35);
+    background: linear-gradient(180deg, rgba(32,32,35,0) 0%, rgba(32,32,35,1) 100%);
+    padding: 0 25px;
+    margin: 0;
+}
+
+.card__age {
+    font-weight: 200;
+}
+
+.tech__bar {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.tech {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: rgb(0, 110, 230);
+    padding: 5px 15px;
+    border-radius: 1024px;
+}
+
+.card_description {
+    text-align: start;
+}
+
+.photo_gallery {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 80px 1fr 80px;
+    grid-template-rows: 20px 380px;
+}
+
+.photo__map__button {
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0);
+    height: 100%;
+    width: 80px;
+    transition: 0.15s ease-in;
+    background: rgb(0,0,0);
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row: 1 / 3;
+}
+
+.photo__map__button--left {
+    background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
+    grid-column: 1;
+}
+
+.photo__map__button--right {
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+    grid-column: 3;
+}
+
+.photo__map__button > * {
+    opacity: 0;
+    transition: inherit;
+}
+
+.photo__map__button:hover > * {
+    opacity: 1;
+}
+
+.photo__map__button:hover {
+   opacity: 1;
+}
+
+.photo_gallery > img {
+    grid-column: 1 / 4;
+    grid-row: 1 / 3;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.photo_map {
+    margin-top: 5px;
+    width: 85%;
+    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    height: 5px;
+    gap: 10px;
+    grid-column: 1 / 4;
+    z-index: 1;
+    grid-row: 1;
+}
+
+.photo_map > div {
+    background-color: hsl(0, 0%, 50%);
+    height: 5px;
+    flex: 1;
+    border-radius: 1024px;
+}
+
+.photo_map > div.checked {
+    background-color: hsl(0, 0%, 100%)!important;
+}
