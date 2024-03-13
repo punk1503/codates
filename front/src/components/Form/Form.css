@@ -17,4 +17,7 @@
 .form__error {
     background-color: var(--red-light);
     color: var(--red-dark);
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--red-dark);
 }

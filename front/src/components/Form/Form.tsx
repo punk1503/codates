@@ -13,9 +13,17 @@ type FormProps = {
     error_callback?: (any: any) => any,
 }
 
+function FormError({ text }: {text: string}) {
+    return (
+        <div className="form__error">
+            {text}
+        </div>
+    )
+}
+
 export default function Form({action_url, fields_data, submit_button_text, response_callback, error_callback}: FormProps) {
     const [valuesArr, setValuesArr] = useState<any[]>(new Array(fields_data.length).fill(''))
-
+    const [errors, setErrors] = useState<string[]>([])
     function produceSetValueFunction(index: number) {
         const func = (newValue: any) => {
             setValuesArr(valuesArr.with(index, newValue))
@@ -33,6 +41,7 @@ export default function Form({action_url, fields_data, submit_button_text, respo
                 response_callback ? response_callback(response) : null
             })
             .catch((error) => {
+                setErrors(Object.values(error.response.data))
                 error_callback ? error_callback(error) : null
             })
         }
@@ -40,6 +49,13 @@ export default function Form({action_url, fields_data, submit_button_text, respo
 
     return (
         <div className="custom_form">
+            <div className="form__errors_list">
+                {errors.map((error) => {
+                    return (
+                        <FormError text={error} />
+                    )
+                })}
+            </div>
             {fields_data.map((field_data, index) => {
                 return <Input 
                     key={index} 
