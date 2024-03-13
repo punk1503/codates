@@ -1,25 +1,39 @@
-import './App.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Form from './components/Form/Form'
-import axios from 'axios'
-import LoginPage from './pages/LoginPage/LoginPage';
-
-axios.defaults.baseURL = 'http://127.0.0.1:8000/';
-axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+import { useState, useEffect } from 'react'
+import { useAuth } from './context/AuthContext'
+import AppRoutes from './router'
+import Spinner from './components/Spinner'
+import Axios from './utils/axiosConfig'
+import Cookies from 'js-cookie'
 
 function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/signin' element={<LoginPage/>}></Route>
-          <Route path='/signup'></Route>
-          <Route path='/' element={<div>345</div>}></Route>
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
+  const { setIsAuthenticated } = useAuth()
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const csrfResponse = await Axios.get('get-csrf-token/')
+        Cookies.set('csrftoken', csrfResponse.data.csrf_token)
+        Axios.defaults.headers.common['X-CSRFToken'] = Cookies.get('csrftoken')
+        
+        const authResponse = await Axios.get('check-auth/')
+        setIsAuthenticated(authResponse.status === 200)
+      } catch (error) {
+        console.error('Error fetching CSRF token or checking auth:', error)
+        setIsAuthenticated(false)
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [setIsAuthenticated])
+
+  if (loading) {
+    return <Spinner />
+  }
+
+  return <AppRoutes />
 }
 
 export default App
