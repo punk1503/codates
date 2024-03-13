@@ -3,11 +3,21 @@
     flex-direction: column;
     max-width: 400px;
     gap: 15px;
-    margin: auto;
+    padding: 15px;
+    align-items: center;
 }
 
 .custom_form > * {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    min-width: 300px;
+}
+
+.form__error {
+    background-color: var(--red-light);
+    color: var(--red-dark);
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--red-dark);
 }

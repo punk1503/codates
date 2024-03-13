@@ -1,9 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap');
+
 :root {
 /* colors */
-  --color-main-blue: hsl(211, 100%, 45%);
-  --color-main-pink: hsl(317, 100%, 68%);
-  --color-main-white: hsl(0, 0%, 100%);
-  --color-main-black: hsl(0, 0%, 0%);
-  --color-main-grey-blue: hsl(210, 16%, 20%);
-  --color-main-grey-pink: hsl(317, 14%, 20%);
+  --text: hsl(247, 75%, 5%);
+  --text2: hsl(0, 0%, 100%);
+  --background: hsl(25, 100%, 94%);
+  --background2: hsl(24, 100%, 98%);
+  --background2-transparent: hsla(24, 100%, 98%, 0.5);
+  --primary: hsl(211, 100%, 45%);
+  --secondary: hsl(211, 100%, 75%);
+  --accent: hsl(317, 100%, 68%);
+  --red-light: hsl(4, 89%, 75%);
+  --red-dark: hsl(9, 84%, 39%);
 }
+
+
+body {
+  font-family: "Martian Mono", monospace;
+
+  font-weight: 400;
+  color: var(--text);
+  background-color: var(--background);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: "Martian Mono", monospace;
+  font-weight: 700;
+}
+
+html {font-size: 100%;} /* 16px */
+
+h1 {font-size: 4.210rem; /* 67.36px */}
+
+h2 {font-size: 3.158rem; /* 50.56px */}
+
+h3 {font-size: 2.369rem; /* 37.92px */}
+
+h4 {font-size: 1.777rem; /* 28.48px */}
+
+h5 {font-size: 1.333rem; /* 21.28px */}
+
+small {font-size: 0.750rem; /* 12px */}
