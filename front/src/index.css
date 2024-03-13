@@ -6,6 +6,7 @@
   --text2: hsl(0, 0%, 100%);
   --background: hsl(25, 100%, 94%);
   --background2: hsl(24, 100%, 98%);
+  --background2-transparent: hsla(24, 100%, 98%, 0.5);
   --primary: hsl(211, 100%, 45%);
   --secondary: hsl(211, 100%, 75%);
   --accent: hsl(317, 100%, 68%);
