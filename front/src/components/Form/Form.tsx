@@ -50,9 +50,9 @@ export default function Form({action_url, fields_data, submit_button_text, respo
     return (
         <div className="custom_form">
             <div className="form__errors_list">
-                {errors.map((error) => {
+                {errors.map((error, index) => {
                     return (
-                        <FormError text={error} />
+                        <FormError key={index} text={error} />
                     )
                 })}
             </div>
