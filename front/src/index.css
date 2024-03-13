@@ -10,6 +10,8 @@
   --primary: hsl(211, 100%, 45%);
   --secondary: hsl(211, 100%, 75%);
   --accent: hsl(317, 100%, 68%);
+  --red-light: hsl(4, 89%, 75%);
+  --red-dark: hsl(9, 84%, 39%);
 }
 
 

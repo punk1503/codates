@@ -40,7 +40,7 @@
 }
 
 .action_button--dis {
-    background-color: hsl(4, 89%, 75%);
+    background-color: var(--red-light);
 }
 
 .action_button--flip {
@@ -51,7 +51,7 @@
     fill: hsl(128, 35%, 39%);
 }
 .action_button--dis > * {
-    fill: hsl(9, 84%, 39%);;
+    fill: var(--red-dark);
 }
 .action_button--flip > * {
     fill: var(--primary);

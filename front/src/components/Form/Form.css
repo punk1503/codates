@@ -13,3 +13,8 @@
     gap: 5px;
     min-width: 300px;
 }
+
+.form__error {
+    background-color: var(--red-light);
+    color: var(--red-dark);
+}

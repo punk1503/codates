@@ -79,7 +79,7 @@ class CustomLoginView(views.APIView):
             response.set_cookie(key='sessionid', value=request.session.session_key)
             return response
         else:
-            return Response({'error': 'Неверные учетные данные'}, status=401)
+            return Response({'errors': 'Неверная пара логин-пароль'}, status=401)
 
 @permission_classes([permissions.AllowAny])
 @api_view(['GET'])

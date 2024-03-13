@@ -19,7 +19,7 @@ export default function CustomSelect ({onChange, options, value, isMulti, isSear
                 : onChange(val.value)
             }
             value={isMulti
-                ? options?.filter((c) => value.includes(c.value))
+                ? options?.filter((c) => value?.includes(c.value))
                 : options?.find((c) => c.value === value)
             }
             isMulti={isMulti}
