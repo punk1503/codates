@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db.models import Q
+from rest_framework.response import Response
+from rest_framework import status
 
 class CustomUser(AbstractUser):
     telephone_number = PhoneNumberField(null=True, blank=False, unique=True)
@@ -11,8 +13,9 @@ class CustomUser(AbstractUser):
     technologies = models.ManyToManyField('Technology')
 
     def match(self):
-        unmatched_users = CustomUser.objects.exclude(id=self.id)
-        return unmatched_users[0]
+        unmatched_users = CustomUser.objects.exclude(id=self.id).exclude(id__in=CustomUserGrades.objects.filter(user_from=self.id).values_list('user_to'))
+        if len(unmatched_users) > 0:
+            return unmatched_users[0]
 
 class City(models.Model):
     name = models.CharField(max_length=255)

@@ -24,7 +24,7 @@
 .buttons_block {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .action_button {

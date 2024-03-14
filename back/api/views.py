@@ -90,12 +90,16 @@ def logout_view(request):
 
 @api_view(['POST'])
 def like_view(request):
-    grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=True)
-    grade.save()
-    return Response(status=status.HTTP_200_OK)
+    if request.data.get('to_user_id'):
+        grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=True)
+        grade.save()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
 def dislike_view(request):
-    grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=False)
-    grade.save()
-    return Response(status=status.HTTP_200_OK)
+    if request.data.get('to_user_id'):
+        grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=False)
+        grade.save()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_404_NOT_FOUND)
