@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
     technologies = models.ManyToManyField('Technology')
 
     def match(self):
-        unmatched_users = CustomUser.objects.exclude(Q(id__in=CustomUserGrades.objects.values_list(id=self.id, flat=True)))
+        unmatched_users = CustomUser.objects.exclude(id=self.id)
         return unmatched_users[0]
 
 class City(models.Model):

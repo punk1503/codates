@@ -22,12 +22,13 @@ class CustomUserGradesCreateApiView(generics.CreateAPIView):
     serializer_class = CustomUserGradesSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+@permission_classes([permissions.IsAuthenticated])
 @api_view(['GET'])
 def get_matched_user(request):
     '''
     API ендпоинт для получения наиболее подходяшего пользователя (мэтч).
     '''
-    return Response(CustomUserSerializer(request.user.match()))
+    return Response(CustomUserSerializer(request.user.match()).data)
 
 @api_view(['GET'])
 def get_csrf_token(request):
@@ -85,4 +86,16 @@ class CustomLoginView(views.APIView):
 @api_view(['GET'])
 def logout_view(request):
     logout(request)
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def like_view(request):
+    grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=True)
+    grade.save()
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def dislike_view(request):
+    grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=False)
+    grade.save()
     return Response(status=status.HTTP_200_OK)

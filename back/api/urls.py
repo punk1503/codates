@@ -14,5 +14,7 @@ urlpatterns = [
     path('cities/', CityListAPIView.as_view()),
     path('technologies/', TechnologyListAPIView.as_view()),
     path('check-auth/', check_auth),
+    path('like/', like_view),
+    path('dislike/', dislike_view),
 
 ]

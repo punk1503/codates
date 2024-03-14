@@ -6,7 +6,7 @@ from rest_framework import serializers
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies']
+        fields = ['id', 'password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies']
         extra_kwargs = {
             'password': {
                 'error_messages': {
@@ -14,7 +14,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
                     'blank': 'Пароль: не может быть пустым.',
                     'max_length': 'Пароль: слишком длинный.',
                     'min_length': 'Пароль: слишком короткий.'
-                }
+                },
+                'write_only': True,
             },
             'username': {
                 'error_messages': {
@@ -54,6 +55,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user = CustomUser.objects.create_user(**validated_data)
         user.technologies.set(technologies)
         return user
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        print(representation)
+        return representation
 
 
 class CustomUserGradesSerializer(serializers.ModelSerializer):

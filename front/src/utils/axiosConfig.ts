@@ -8,7 +8,7 @@ const Axios = axios.create({
     headers: {
       'Content-Type': 'application/json'
     },
-    baseURL: 'http://127.0.0.1:8000/api/'
+    baseURL: 'http://127.0.0.1:8000/api/',
 })
 
 Axios.interceptors.request.use(function (config) {
