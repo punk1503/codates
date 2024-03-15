@@ -60,7 +60,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['images'] = ProfilePicture.objects.filter(user=instance)
         representation['technologies'] = [TechnologySerializer(tech).data for tech in instance.technologies.all()]
-        print(representation)
         return representation
 
 
