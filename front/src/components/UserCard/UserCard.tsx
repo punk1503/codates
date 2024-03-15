@@ -20,6 +20,7 @@ type UserCardProps = {
   images: Image[],
   technologies:Technology[],
   code_snippet: string,
+  code_theme: string,
   theme: string,
 }
 
@@ -137,6 +138,7 @@ function UserCard() {
               </div>
             </div>
             <div className={"back " + (isFlipped ? "back--flipped" : "")}>
+              <link rel="stylesheet" href={"../../../node_modules/highlight.js/" + userData.code_theme + ".css"} />
               <pre className="code_block">
                 <code className="code_block">
                   {userData?.code_snippet}
