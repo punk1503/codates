@@ -3,13 +3,20 @@ import "./UserCard.css";
 import hljs from "highlight.js";
 import '/node_modules/highlight.js/styles/atom-one-dark.css'
 import Axios from '../../utils/axiosConfig'
+import addMediaPrefix from "../../utils/addMediaPrefix";
+
+type Image = {
+  user: number,
+  image: string,
+}
 
 type UserCardProps = {
   id: number,
   name: string,
+  first_name: string,
   age: number,
   description: string,
-  photos:string[],
+  images: Image[],
   technologies:Technology[],
   code: string,
   theme: string,
@@ -67,11 +74,11 @@ function UserCard() {
     Axios.get('match/')
     .then((response) => {
       setUserData(response.data)
+      console.log(response.data)
     })
   }
 
   function sendLikeRequest() {
-    console.log(userData?.id)
     Axios.post('like/', {to_user_id: userData?.id})
   }
 
@@ -94,9 +101,9 @@ function UserCard() {
         <div className="wrapper">
           <div className={"card " + (isFlipped ? "card--flipped" : "")}>
             <div className="card__top">
-              <PhotoGallery photos={userData?.photos ? userData?.photos : []}></PhotoGallery>
+              <PhotoGallery photos={userData?.images ? userData?.images.map((image) => addMediaPrefix(image.image)) : []}></PhotoGallery>
               <h2 className="card__name">
-                {userData?.name}, <span className="card__age">{userData?.age}</span>
+                {userData?.first_name}, <span className="card__age">{userData?.age}</span>
               </h2>
             </div>
             <div className="card__bottom">
@@ -136,7 +143,7 @@ function UserCard() {
         :
         <></>
         }
-        <button className="action_button action_button--flip" onClick={() => setIsFlipped(!isFlipped)}>
+        <button className="action_button action_button--flip" onClick={() => {setIsFlipped(!isFlipped)}}>
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
             <path d="M320-240 80-480l240-240 57 57-184 184 183 183-56 56Zm320 0-57-57 184-184-183-183 56-56 240 240-240 240Z" />
           </svg>

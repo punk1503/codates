@@ -33,6 +33,7 @@
     aspect-ratio: 1 / 1;
     border-radius: 1024px;
     background-color: hsl(0, 0%, 96%);
+    user-select: none;
 }
 
 .action_button--like {

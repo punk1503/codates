@@ -29,7 +29,9 @@ def get_matched_user(request):
     API ендпоинт для получения наиболее подходяшего пользователя (мэтч).
     '''
     if request.user.is_authenticated:
-        return Response(CustomUserSerializer(request.user.match()).data)
+        pair = CustomUserSerializer(request.user.match()).data
+        print(pair)
+        return Response(pair)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['GET'])
