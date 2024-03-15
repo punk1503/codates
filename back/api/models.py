@@ -89,6 +89,8 @@ class CustomUser(AbstractUser):
     code_snippet = models.TextField(default='print("I love CoDates!")')
     code_theme = models.CharField(choices=THEMES, max_length=255)
     description = models.CharField(max_length=255)
+    cluster = models.FloatField()
+
     def match(self):
         unmatched_users = CustomUser.objects.exclude(id=self.id).exclude(id__in=CustomUserGrades.objects.filter(user_from=self.id).values_list('user_to'))
         if len(unmatched_users) > 0:
