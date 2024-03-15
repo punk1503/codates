@@ -33,7 +33,7 @@ class Command(BaseCommand):
             gender = fake.boolean(chance_of_getting_true=50)
             city_id = fake.random_int(min=1, max=10)  # Assuming you have 10 cities in your database
             code_theme = fake.random_element(elements=['atom-one-dark', 'another-theme', 'yet-another-theme'])
-
+            description = fake.sentence().strip("('").rstrip("')")
             # Create user
             try:
                 user = CustomUser.objects.create(
@@ -45,7 +45,8 @@ class Command(BaseCommand):
                     age=age,
                     gender=gender,
                     city_id=city_id,
-                    code_theme=code_theme
+                    code_theme=code_theme,
+                    description=description,
                 )
 
 

@@ -83,6 +83,7 @@ function UserCard() {
   }
 
   function sendLikeRequest() {
+    setIsFlipped(false)
     Axios.post('like/', {to_user_id: userData?.id})
     .then(() => {
       fetchMatchedUser()
@@ -90,6 +91,7 @@ function UserCard() {
   }
 
   function sendDislikeRequest() {
+    setIsFlipped(false)
     Axios.post('dislike/', {to_user_id: userData?.id})
     .then(() => {
       fetchMatchedUser()
@@ -107,39 +109,45 @@ function UserCard() {
   return (
     <div className="card_block">
       <div className="large_card_grid">
-        <div className="wrapper">
-          <div className={"card " + (isFlipped ? "card--flipped" : "")}>
-            <div className="card__top">
-              <PhotoGallery photos={userData?.images ? userData?.images.map((image) => addMediaPrefix(image.image)) : []}></PhotoGallery>
-              <h2 className="card__name">
-                {userData?.first_name}, <span className="card__age">{userData?.age}</span>
-              </h2>
-            </div>
-            <div className="card__bottom">
-              <div className="tech__bar">
-                {userData?.technologies?.map((tech, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="tech"
-                      style={{ backgroundColor: tech.background_color, color: tech.font_color }}
-                    >
-                      {tech.name}
-                    </div>
-                  );
-                })}
+        {userData?.id ? 
+          <div className="wrapper">
+            <div className={"card " + (isFlipped ? "card--flipped" : "")}>
+              <div className="card__top">
+                <PhotoGallery photos={userData?.images ? userData?.images.map((image) => addMediaPrefix(image.image)) : []}></PhotoGallery>
+                <h2 className="card__name">
+                  {userData?.first_name}, <span className="card__age">{userData?.age}</span>
+                </h2>
               </div>
-              <div className="card_description">{userData?.description}</div>
+              <div className="card__bottom">
+                <div className="tech__bar">
+                  {userData?.technologies?.map((tech, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="tech"
+                        style={{ backgroundColor: tech.background_color, color: tech.font_color }}
+                      >
+                        {tech.name}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="card_description">{userData?.description}</div>
+              </div>
+            </div>
+            <div className={"back " + (isFlipped ? "back--flipped" : "")}>
+              <pre className="code_block">
+                <code className="code_block">
+                  {userData?.code_snippet}
+                </code>
+              </pre>
             </div>
           </div>
-          <div className={"back " + (isFlipped ? "back--flipped" : "")}>
-            <pre className="code_block">
-              <code className="code_block">
-                {userData?.code_snippet}
-              </code>
-            </pre>
+        :
+          <div className="fake_card">
+            Кажется, вы просмотрели всех подходящих пользователей. Возвращайтесь позже :)
           </div>
-        </div>
+        }
         <div className="fake_card"></div>
         <div className="fake_card"></div>
         <div className="fake_card"></div>
@@ -152,7 +160,7 @@ function UserCard() {
             </svg>
           </button>
         :
-        <></>
+          <></>
         }
         <button className="action_button action_button--flip" onClick={() => {setIsFlipped(!isFlipped)}}>
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
@@ -166,7 +174,7 @@ function UserCard() {
             </svg>
           </button>
         :
-        <></>
+          <></>
         }
       </div>
     </div>
