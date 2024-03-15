@@ -32,9 +32,9 @@ class Command(BaseCommand):
             age = fake.random_int(min=18, max=80)
             gender = fake.boolean(chance_of_getting_true=50)
             city_id = fake.random_int(min=1, max=10)  # Assuming you have 10 cities in your database
-            code_theme = fake.random_element(elements=['atom-one-dark', 'another-theme', 'yet-another-theme'])
             description = fake.sentence().strip("('").rstrip("')")
-            # Create user
+            first_elements = [theme[0] for theme in CustomUser.THEMES]
+            code_theme = first_elements[random.randint(0, len(first_elements)-1)]
             try:
                 user = CustomUser.objects.create(
                     username=fake.user_name(),
@@ -50,8 +50,7 @@ class Command(BaseCommand):
                 )
 
 
-                # Assign existing technologies to the user
-                for _ in range(random.randint(1, 5)):  # Assign between 1 and 5 technologies to each user
+                for _ in range(random.randint(1, 5)):
                     technology = random.choice(technologies)
                     user.technologies.add(technology)
                 

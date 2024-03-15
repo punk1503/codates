@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import "./UserCard.css";
-import hljs from "highlight.js";
+import { useEffect, useState } from "react"
+import "./UserCard.css"
+import hljs from "highlight.js"
 import 'highlight.js/styles/default.css'
-import '/node_modules/highlight.js/styles/atom-one-dark.css'
 import Axios from '../../utils/axiosConfig'
 import addMediaPrefix from "../../utils/addMediaPrefix"
 
@@ -138,7 +137,7 @@ function UserCard() {
               </div>
             </div>
             <div className={"back " + (isFlipped ? "back--flipped" : "")}>
-              <link rel="stylesheet" href={"../../../node_modules/highlight.js/" + userData.code_theme + ".css"} />
+              {/* add theme import */}
               <pre className="code_block">
                 <code className="code_block">
                   {userData?.code_snippet}
