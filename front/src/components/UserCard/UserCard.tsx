@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import "./UserCard.css";
 import hljs from "highlight.js";
+import 'highlight.js/styles/default.css'
 import '/node_modules/highlight.js/styles/atom-one-dark.css'
 import Axios from '../../utils/axiosConfig'
-import addMediaPrefix from "../../utils/addMediaPrefix";
+import addMediaPrefix from "../../utils/addMediaPrefix"
 
 type Image = {
   user: number,
@@ -37,6 +38,7 @@ function PhotoGallery({ photos} : {photos: string[]} ) {
     }
     return resultNodes;
   }
+
   return (
     <div className="photo_gallery">
       <div className="photo_map">
@@ -77,21 +79,25 @@ function UserCard() {
     Axios.get('match/')
     .then((response) => {
       setUserData(response.data)
-      console.log(response.data)
     })
   }
 
   function sendLikeRequest() {
     Axios.post('like/', {to_user_id: userData?.id})
+    .then(() => {
+      fetchMatchedUser()
+    })
   }
 
   function sendDislikeRequest() {
     Axios.post('dislike/', {to_user_id: userData?.id})
+    .then(() => {
+      fetchMatchedUser()
+    })
   }
 
   useEffect(() => {
-    const nodes = document.querySelectorAll('pre code')
-    nodes.forEach(node => hljs.highlightBlock(node as HTMLElement))
+    hljs.highlightAll()
   }, [userData])
 
   useEffect(() => {
@@ -128,7 +134,9 @@ function UserCard() {
           </div>
           <div className={"back " + (isFlipped ? "back--flipped" : "")}>
             <pre className="code_block">
-              <code className="code_block">{userData?.code_snippet}</code>
+              <code className="code_block">
+                {userData?.code_snippet}
+              </code>
             </pre>
           </div>
         </div>
@@ -138,7 +146,7 @@ function UserCard() {
       </div>
       <div className="buttons_block">
         {userData?.id ?
-          <button className="action_button action_button--like" onClick={() => {sendLikeRequest(); fetchMatchedUser()}}>
+          <button className="action_button action_button--like" onClick={() => {sendLikeRequest()}}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
               <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
             </svg>
@@ -152,7 +160,7 @@ function UserCard() {
           </svg>
         </button>
         {userData?.id ?
-          <button className="action_button action_button--dis" onClick={() => {sendDislikeRequest(); fetchMatchedUser()}}>
+          <button className="action_button action_button--dis" onClick={() => {sendDislikeRequest()}}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
               <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
             </svg>

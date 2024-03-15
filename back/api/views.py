@@ -94,6 +94,7 @@ def logout_view(request):
 @api_view(['POST'])
 def like_view(request):
     if request.data.get('to_user_id'):
+        print(f"Liked user {request.data['to_user_id']}")
         grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=True)
         grade.save()
         return Response(status=status.HTTP_200_OK)
@@ -102,6 +103,7 @@ def like_view(request):
 @api_view(['POST'])
 def dislike_view(request):
     if request.data.get('to_user_id'):
+        print(f"Disliked user {request.data['to_user_id']}")
         grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=False)
         grade.save()
         return Response(status=status.HTTP_200_OK)
