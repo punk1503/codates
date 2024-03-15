@@ -18,13 +18,16 @@ type UserCardProps = {
   description: string,
   images: Image[],
   technologies:Technology[],
-  code: string,
+  code_snippet: string,
   theme: string,
 }
 
 function PhotoGallery({ photos} : {photos: string[]} ) {
   const [currentPhotoID, setCurrentPhotoID] = useState(0);
 
+  useEffect(() => {
+    setCurrentPhotoID(0)
+  }, [photos])
   function returnPhotoMapSpans() {
     let resultNodes = [];
     for (let i = 0; i < photos.length; i++) {
@@ -125,7 +128,7 @@ function UserCard() {
           </div>
           <div className={"back " + (isFlipped ? "back--flipped" : "")}>
             <pre className="code_block">
-              <code className="code_block">{userData?.code}</code>
+              <code className="code_block">{userData?.code_snippet}</code>
             </pre>
           </div>
         </div>

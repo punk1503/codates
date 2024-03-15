@@ -30,7 +30,6 @@ def get_matched_user(request):
     '''
     if request.user.is_authenticated:
         pair = CustomUserSerializer(request.user.match()).data
-        print(pair)
         return Response(pair)
     return Response(status=status.HTTP_401_UNAUTHORIZED)
 
