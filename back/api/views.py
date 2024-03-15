@@ -28,7 +28,10 @@ def get_matched_user(request):
     '''
     API ендпоинт для получения наиболее подходяшего пользователя (мэтч).
     '''
-    return Response(CustomUserSerializer(request.user.match()).data)
+    if request.user.is_authenticated:
+        pair = CustomUserSerializer(request.user.match()).data
+        return Response(pair)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['GET'])
 def get_csrf_token(request):
@@ -77,7 +80,7 @@ class CustomLoginView(views.APIView):
             login(request, user)
             # Устанавливаем идентификатор сессии в куки
             response = Response({'message': 'Вход успешен'})
-            response.set_cookie(key='sessionid', value=request.session.session_key)
+            response.set_cookie(key='sessionid', value=request.session.session_key, samesite='None')
             return response
         else:
             return Response({'password': ['Неподходящая пара логин-пароль.']}, status=401)
@@ -90,12 +93,18 @@ def logout_view(request):
 
 @api_view(['POST'])
 def like_view(request):
-    grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=True)
-    grade.save()
-    return Response(status=status.HTTP_200_OK)
+    if request.data.get('to_user_id'):
+        print(f"Liked user {request.data['to_user_id']}")
+        grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=True)
+        grade.save()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
 def dislike_view(request):
-    grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=False)
-    grade.save()
-    return Response(status=status.HTTP_200_OK)
+    if request.data.get('to_user_id'):
+        print(f"Disliked user {request.data['to_user_id']}")
+        grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=False)
+        grade.save()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_404_NOT_FOUND)

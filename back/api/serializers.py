@@ -6,7 +6,7 @@ from rest_framework import serializers
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies']
+        fields = ['id', 'password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies', 'code_snippet', 'code_theme', 'description']
         extra_kwargs = {
             'password': {
                 'error_messages': {
@@ -58,7 +58,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
     
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        print(representation)
+        representation['images'] = [ProfilePictureSerializer(picture).data for picture in ProfilePicture.objects.filter(user=instance)]
+        representation['technologies'] = [TechnologySerializer(tech).data for tech in instance.technologies.all()]
         return representation
 
 
@@ -76,3 +77,8 @@ class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
         model = Technology
         fields  = '__all__'
+    
+class ProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfilePicture
+        fields = ['user', 'image']

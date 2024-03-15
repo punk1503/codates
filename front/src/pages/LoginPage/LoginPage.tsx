@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import Form from "../../components/Form/Form"
 import { CenteredBlock } from "../../components/Blocks"
+import Cookies from "js-cookie"
 
 export default function LoginPage() {
     const navigate = useNavigate()
@@ -29,7 +30,9 @@ export default function LoginPage() {
                     ]
                 }
                 submit_button_text="Вход"
-                response_callback={() => {navigate('/')}}
+                response_callback={(response) => {
+                    navigate('/');
+                }}
             ></Form>
         </CenteredBlock>
         </>
