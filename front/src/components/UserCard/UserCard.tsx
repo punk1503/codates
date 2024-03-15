@@ -29,6 +29,7 @@ function PhotoGallery({ photos} : {photos: string[]} ) {
   useEffect(() => {
     setCurrentPhotoID(0)
   }, [photos])
+
   function returnPhotoMapSpans() {
     let resultNodes = [];
     for (let i = 0; i < photos.length; i++) {
