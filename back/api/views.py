@@ -28,7 +28,9 @@ def get_matched_user(request):
     '''
     API ендпоинт для получения наиболее подходяшего пользователя (мэтч).
     '''
-    return Response(CustomUserSerializer(request.user.match()).data)
+    if request.user.is_authenticated:
+        return Response(CustomUserSerializer(request.user.match()).data)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['GET'])
 def get_csrf_token(request):
@@ -77,7 +79,7 @@ class CustomLoginView(views.APIView):
             login(request, user)
             # Устанавливаем идентификатор сессии в куки
             response = Response({'message': 'Вход успешен'})
-            response.set_cookie(key='sessionid', value=request.session.session_key)
+            response.set_cookie(key='sessionid', value=request.session.session_key, samesite='None')
             return response
         else:
             return Response({'password': ['Неподходящая пара логин-пароль.']}, status=401)

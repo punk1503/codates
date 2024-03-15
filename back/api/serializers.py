@@ -58,6 +58,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
     
     def to_representation(self, instance):
         representation = super().to_representation(instance)
+        representation['images'] = ProfilePicture.objects.filter(user=instance)
+        representation['technologies'] = [TechnologySerializer(tech).data for tech in instance.technologies.all()]
         print(representation)
         return representation
 
@@ -76,3 +78,4 @@ class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
         model = Technology
         fields  = '__all__'
+    
