@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
-import "./UserCard.css"
-import hljs from "highlight.js"
-import 'highlight.js/styles/default.css'
+import { useEffect, useState } from 'react'
+import './UserCard.css'
+import hljs from 'highlight.js'
 import Axios from '../../utils/axiosConfig'
-import addMediaPrefix from "../../utils/addMediaPrefix"
+import addMediaPrefix from '../../utils/addMediaPrefix'
 
 type Image = {
   user: number,
@@ -101,10 +100,11 @@ function UserCard() {
 
   useEffect(() => {
     hljs.highlightAll()
-  }, [userData])
+  }, [userData]);
 
   useEffect(() => {
     fetchMatchedUser()
+    importAllThemes()
   }, [])
 
   return (
@@ -139,7 +139,7 @@ function UserCard() {
             <div className={"back " + (isFlipped ? "back--flipped" : "")}>
               {/* add theme import */}
               <pre className="code_block">
-                <code className="code_block">
+                <code className={`code_block hljs ${userData?.code_theme}`}>
                   {userData?.code_snippet}
                 </code>
               </pre>

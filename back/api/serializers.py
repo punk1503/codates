@@ -6,8 +6,7 @@ from rest_framework import serializers
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies']
-        optional_fields = ['description', 'code_theme', 'code_snippet']
+        fields = ['id', 'password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies', 'code_snippet', 'code_theme', 'description']
         extra_kwargs = {
             'password': {
                 'error_messages': {
@@ -48,6 +47,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
                     'required': 'Технологии: обязательное поле.',
                     'blank': 'Технологии: не может быть пустым.',
                 }
+            },
+            'code_snippet': {
+                'required': False,
+            },
+            'code_theme': {
+                'required': False
+            },
+            'description': {
+                'required': False,
             },
         }
 
