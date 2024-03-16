@@ -104,7 +104,6 @@ function UserCard() {
 
   useEffect(() => {
     fetchMatchedUser()
-    importAllThemes()
   }, [])
 
   return (
