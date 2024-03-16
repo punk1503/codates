@@ -1,9 +1,23 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db.models import Q
-from rest_framework.response import Response
-from rest_framework import status
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, username, password, **extra_fields):
+        if not username:
+            raise ValueError('The Username field must be set')
+        user = self.model(username=username, **extra_fields)
+        if password:
+            user.set_password(password)
+        user.save(using=self._db)
+        user.clusterize()
+        return user
+
 
 class CustomUser(AbstractUser):
     THEMES = {
@@ -89,7 +103,23 @@ class CustomUser(AbstractUser):
     code_snippet = models.TextField(default='print("I love CoDates!")')
     code_theme = models.CharField(choices=THEMES, max_length=255)
     description = models.CharField(max_length=255)
-    cluster = models.FloatField()
+    cluster = models.FloatField(default=0)
+
+    objects = CustomUserManager()
+
+    def clusterize(self):
+        user_features=[self.age/80, int(self.gender), self.city.latitude/24]
+        for technology in Technology.objects.all():
+            if self.technologies.filter(id=technology.id).exists():
+                user_features.append(1)
+            else:
+                user_features.append(0)
+        X_user = np.array(user_features).reshape(1, -1)
+        scaler = StandardScaler()
+        X_user_scaled = scaler.fit_transform(X_user)
+        pca = PCA(n_components=1)
+        X_user_pca = pca.fit_transform(X_user_scaled)
+        self.cluster = X_user_pca[0][0]
 
     def match(self):
         unmatched_users = CustomUser.objects.exclude(id=self.id).exclude(id__in=CustomUserGrades.objects.filter(user_from=self.id).values_list('user_to'))
