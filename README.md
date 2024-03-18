@@ -7,6 +7,7 @@ Frontend
 ```
 cd front
 npm i
+node src/scripts/build_styles.cjs
 npm run dev
 ```
 Backend
