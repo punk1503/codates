@@ -143,3 +143,15 @@ class CustomUserGrades(models.Model):
 class ProfilePicture(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='profile_picture')
     image = models.FileField()
+
+class Chat(models.Model):
+    user1 = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='initiator')
+    user2 = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='receiver')
+
+class Message(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='sender')
+    text = models.TextField(null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-timestamp']
