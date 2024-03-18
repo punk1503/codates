@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.models import CustomUser, Technology, ProfilePicture
+from api.models import CustomUser, Technology, ProfilePicture, City
 from faker import Faker
 import random
 
@@ -31,7 +31,7 @@ class Command(BaseCommand):
             telephone_number = fake.phone_number()
             age = fake.random_int(min=18, max=80)
             gender = fake.boolean(chance_of_getting_true=50)
-            city_id = fake.random_int(min=1, max=10)  # Assuming you have 10 cities in your database
+            city_id = fake.random_int(min=1, max=len(City.objects.all()))  # Assuming you have 10 cities in your database
             description = fake.sentence().strip("('").rstrip("')")
             first_elements = [theme[0] for theme in CustomUser.THEMES]
             code_theme = first_elements[random.randint(0, len(first_elements)-1)]

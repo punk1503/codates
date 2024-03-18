@@ -7,6 +7,7 @@ Frontend
 ```
 cd front
 npm i
+node src/scripts/build_styles.cjs
 npm run dev
 ```
 Backend
@@ -15,5 +16,7 @@ cd back
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+python manage.py fill_cities
+python manage.py fill_tech
 python3 manage.py runserver
 ```

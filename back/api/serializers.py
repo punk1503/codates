@@ -48,6 +48,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
                     'blank': 'Технологии: не может быть пустым.',
                 }
             },
+            'code_snippet': {
+                'required': False,
+            },
+            'code_theme': {
+                'required': False
+            },
+            'description': {
+                'required': False,
+            },
         }
 
     def create(self, validated_data):

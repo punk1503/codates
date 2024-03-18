@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react"
-import "./UserCard.css"
-import hljs from "highlight.js"
-import 'highlight.js/styles/default.css'
+import { useEffect, useState } from 'react'
+import './UserCard.css'
+import hljs, { HighlightResult } from 'highlight.js'
+import '../../assets/css/themes.css'
 import Axios from '../../utils/axiosConfig'
-import addMediaPrefix from "../../utils/addMediaPrefix"
-
+import addMediaPrefix from '../../utils/addMediaPrefix'
 type Image = {
   user: number,
   image: string,
 }
+function createMarkup(result: HighlightResult): { __html: string } {
+  return { __html: result.value.trim() };
+}
+
 
 type UserCardProps = {
   id: number,
@@ -138,8 +141,8 @@ function UserCard() {
             </div>
             <div className={"back " + (isFlipped ? "back--flipped" : "")}>
               {/* add theme import */}
-              <pre className="code_block">
-                <code className="code_block">
+              <pre className={`code_block theme-${userData?.code_theme}`}>
+                <code className='code_block'>
                   {userData?.code_snippet}
                 </code>
               </pre>
