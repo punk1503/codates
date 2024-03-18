@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage/LoginPage"
 import MainPage from "./pages/MainPage/MainPage"
 import MatchingPage from "./pages/MatchingPage/MatchingPage"
 import LogoutPage from "./pages/LogoutPage"
+import ChatsPage from "./pages/ChatsPage/ChatsPage"
 
 type PrivateRouteProps = {
     isForAuthenticated: boolean,
@@ -26,6 +27,8 @@ function AppRoutes() {
             <BrowserRouter>
                 <Routes>
                     <Route element={<PrivateRoute isForAuthenticated={true} />}>
+                        <Route path="/matching" element={<MatchingPage/>}></Route>
+                        <Route path="/chats" element={<ChatsPage/>}></Route>
                     </Route>
 
                     <Route element={<PrivateRoute isForAuthenticated={false} />}>
@@ -34,12 +37,6 @@ function AppRoutes() {
                     </Route>
 
                     <Route path="/" element={<MainPage/>}></Route>
-
-                    {/*
-                        этот маршрут стоит здесь только для тестирования.
-                        нужно будет переместить его первый роут 
-                    */}
-                    <Route path="/matching" element={<MatchingPage/>}></Route>
                     <Route path="/logout" element={<LogoutPage/>}></Route>
 
                 </Routes>

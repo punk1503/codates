@@ -5,6 +5,7 @@ from django.db.models import Q
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from django.core.exceptions import ValidationError
 
 
 class CustomUserManager(BaseUserManager):
@@ -140,6 +141,12 @@ class CustomUserGrades(models.Model):
     user_to = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='graded_user')
     grade = models.BooleanField() # true for like, false for dislike
 
+    def save(self, *args, **kwargs):
+        if CustomUserGrades.objects.filter(user_from=self.user_to, user_to=self.user_from).exists():
+            Chat(user1=self.user_from, user2=self.user_to).save()
+            print('CHAT CREATED', self.user_from, self.user_to)
+        return super().save(*args, **kwargs)
+        
 class ProfilePicture(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='profile_picture')
     image = models.FileField()
