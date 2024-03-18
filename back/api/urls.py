@@ -16,5 +16,6 @@ urlpatterns = [
     path('check-auth/', check_auth),
     path('like/', like_view),
     path('dislike/', dislike_view),
+    path('chats/', ChatsListAPIView.as_view())
 
 ]

@@ -20,8 +20,7 @@ export default function ChatsPage() {
             {chats.map((chat) => {
                 return (
                     <div>
-                        {chat.user1.username}
-                        {chat.user2.username}
+                        {chat.user1.username} - {chat.user2.username}
                     </div>
                 )
             })}

@@ -140,7 +140,6 @@ function UserCard() {
               </div>
             </div>
             <div className={"back " + (isFlipped ? "back--flipped" : "")}>
-              {/* add theme import */}
               <pre className={`code_block theme-${userData?.code_theme}`}>
                 <code className='code_block'>
                   {userData?.code_snippet}

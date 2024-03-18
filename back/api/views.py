@@ -110,8 +110,8 @@ def dislike_view(request):
     return Response(status=status.HTTP_404_NOT_FOUND)
 
 class ChatsListAPIView(generics.ListAPIView):
-    serializer_class = ChatSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
     def get_queryset(self):
         return Chat.objects.filter(Q(user1=self.request.user) | Q(user2=self.request.user))
+    
+    serializer_class = ChatSerializer
+    permission_classes = [permissions.IsAuthenticated]

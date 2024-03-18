@@ -97,7 +97,16 @@ class ChatSerializer(serializers.ModelSerializer):
         model = Chat
         fields = '__all__'
 
+    def to_representation(self, instance):
+        representation = {}
+        representation['user1'] = CustomUserSerializer(instance.user1).data
+        representation['user2'] = CustomUserSerializer(instance.user2).data
+        print(representation)
+        return representation
+
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = ['user1', 'user2']
+
+
