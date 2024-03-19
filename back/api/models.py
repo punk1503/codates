@@ -144,7 +144,6 @@ class CustomUserGrades(models.Model):
     def save(self, *args, **kwargs):
         if CustomUserGrades.objects.filter(user_from=self.user_to, user_to=self.user_from).exists():
             Chat(user1=self.user_from, user2=self.user_to).save()
-            print('CHAT CREATED', self.user_from, self.user_to)
         return super().save(*args, **kwargs)
         
 class ProfilePicture(models.Model):

@@ -1,7 +1,7 @@
 import { User } from "./User.interface"
 
 export type Message = {
-    sender: User,
+    user: User,
     chat: number,
     text: string,
     timestamp: string,

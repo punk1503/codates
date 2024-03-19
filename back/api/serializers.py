@@ -101,12 +101,12 @@ class ChatSerializer(serializers.ModelSerializer):
         representation = {}
         representation['user1'] = CustomUserSerializer(instance.user1).data
         representation['user2'] = CustomUserSerializer(instance.user2).data
-        print(representation)
         return representation
 
 class MessageSerializer(serializers.ModelSerializer):
+    user = CustomUserSerializer()
     class Meta:
         model = Message
-        fields = ['user1', 'user2']
+        fields = ['user', 'text']
 
 

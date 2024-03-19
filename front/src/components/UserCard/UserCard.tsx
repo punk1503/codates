@@ -4,26 +4,10 @@ import hljs, { HighlightResult } from 'highlight.js'
 import '../../assets/css/themes.css'
 import Axios from '../../utils/axiosConfig'
 import addMediaPrefix from '../../utils/addMediaPrefix'
-type Image = {
-  user: number,
-  image: string,
-}
+import { User } from '../../types/User.interface'
+
 function createMarkup(result: HighlightResult): { __html: string } {
   return { __html: result.value.trim() };
-}
-
-
-type UserCardProps = {
-  id: number,
-  name: string,
-  first_name: string,
-  age: number,
-  description: string,
-  images: Image[],
-  technologies:Technology[],
-  code_snippet: string,
-  code_theme: string,
-  theme: string,
 }
 
 function PhotoGallery({ photos} : {photos: string[]} ) {
@@ -77,7 +61,7 @@ function PhotoGallery({ photos} : {photos: string[]} ) {
 
 function UserCard() {
   const [isFlipped, setIsFlipped] = useState(false)
-  const [userData, setUserData] = useState<UserCardProps>()
+  const [userData, setUserData] = useState<User>()
 
   function fetchMatchedUser() {
     Axios.get('match/')

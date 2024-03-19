@@ -1,11 +1,11 @@
-type Technology = {
+export type Technology = {
     id?: number,
     name: string,
     background_color: string,
     font_color: string,
 }
 
-type TechnologyReformed = {
+export type TechnologyReformed = {
     value: number,
     label: string,
 }
