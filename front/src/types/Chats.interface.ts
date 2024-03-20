@@ -8,6 +8,5 @@ export type Message = {
 }
 
 export type Chat = {
-    user1: User,
-    user2: User,
+    user: User,
 }

@@ -7,6 +7,7 @@ import MainPage from "./pages/MainPage/MainPage"
 import MatchingPage from "./pages/MatchingPage/MatchingPage"
 import LogoutPage from "./pages/LogoutPage"
 import ChatsPage from "./pages/ChatsPage/ChatsPage"
+import ChatPage from "./pages/ChatPage/ChatPage"
 
 type PrivateRouteProps = {
     isForAuthenticated: boolean,
@@ -28,7 +29,8 @@ function AppRoutes() {
                 <Routes>
                     <Route element={<PrivateRoute isForAuthenticated={true} />}>
                         <Route path="/matching" element={<MatchingPage/>}></Route>
-                        <Route path="/chats" element={<ChatsPage/>}></Route>
+                        <Route path="/chat" element={<ChatsPage/>}></Route>
+                        <Route path="/chat/:user_id" element={<ChatPage/>}></Route>
                     </Route>
 
                     <Route element={<PrivateRoute isForAuthenticated={false} />}>

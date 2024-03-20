@@ -37,13 +37,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         json_load_data = json.loads(text_data)
         message = await database_sync_to_async(self.get_message)(json_load_data)
-        serializer_message = await database_sync_to_async(self.get_serialized_message)(message)
+        serialized_message = await database_sync_to_async(self.get_serialized_message)(message)
         await database_sync_to_async(message.save)()
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': serializer_message
+                'message': serialized_message
             }
         )
 

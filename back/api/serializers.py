@@ -98,9 +98,15 @@ class ChatSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def to_representation(self, instance):
+        sender = None
+        receiver = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            sender = request.user
+            receiver = instance.user1 if instance.user1 != sender else instance.user2
+            
         representation = {}
-        representation['user1'] = CustomUserSerializer(instance.user1).data
-        representation['user2'] = CustomUserSerializer(instance.user2).data
+        representation['user'] = CustomUserSerializer(receiver).data
         return representation
 
 class MessageSerializer(serializers.ModelSerializer):
