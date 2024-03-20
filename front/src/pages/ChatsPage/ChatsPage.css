@@ -1,0 +1,14 @@
+.chats {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    flex-direction: column;
+}
+
+.chat {
+    background-color: var(--background2);
+    padding: 15px;
+    display: flex;
+    width: 100%;
+    border-radius: 15px;
+}
