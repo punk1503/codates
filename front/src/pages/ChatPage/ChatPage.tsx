@@ -70,7 +70,10 @@ export default function ChatPage() {
     return (
         <CenteredBlock>
             {readyState === WebSocket.OPEN ?
-            <div className="chat_block">  
+            <div className="chat_block">
+                <div className="chat_header">
+                    <h4>Чат</h4>
+                </div>
                 <div className="messages">
                     {messages.map((message, index) => (
                         <Msg key={index} text={message.text} user={message.user}></Msg>
