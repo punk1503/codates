@@ -115,3 +115,10 @@ class ChatsListAPIView(generics.ListAPIView):
     
     serializer_class = ChatSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class MessagesListAPIView(generics.ListAPIView):
+    def get_queryset(self):
+        return Message.objects.filter(chat=Chat.objects.get(Q(user1=self.request.user, user2=self.kwargs.get('user_id')) | Q(user1=self.kwargs.get('user_id'), user2=self.request.user)))
+    
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated]

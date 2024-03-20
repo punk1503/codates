@@ -159,5 +159,3 @@ class Message(models.Model):
     text = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='chat_id')
-    class Meta:
-        ordering = ['-timestamp']

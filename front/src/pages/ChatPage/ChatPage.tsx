@@ -33,9 +33,9 @@ export default function ChatPage() {
     }, [user_id])
 
     useEffect(() => {
-        Axios.get(`chat/${user_id}`)
+        Axios.get(`chat/${user_id}/`)
         .then((response) => {
-            console.log(response)
+            setMessages(response.data)
         })
     }, [])
 
