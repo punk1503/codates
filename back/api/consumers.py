@@ -14,6 +14,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.user_id_2 = int(self.scope['url_route']['kwargs']['receiver_id'])
         self.user_2 = await database_sync_to_async(CustomUser.objects.get)(id=self.user_id_2)
         self.room_group_name = f'chat_{min(self.user_id_1, self.user_id_2)}_{max(self.user_id_1, self.user_id_2)}'
+        chat = await database_sync_to_async(Chat.objects.filter)(Q(user1=self.user_1, user2=self.user_2) | Q(user1=self.user_2, user2=self.user_1))
+        if not await database_sync_to_async(chat.exists)():
+            self.disconnect()
+            return
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -49,7 +53,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def chat_message(self, event):
         message = event['message']
-
         await self.send(text_data=json.dumps({
             'message': message
         }))
