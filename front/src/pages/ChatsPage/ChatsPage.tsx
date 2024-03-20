@@ -4,7 +4,7 @@ import { Chat, Message } from '../../types/Chats.interface'
 import Axios from "../../utils/axiosConfig"
 import { backendAdress } from "../../utils/env"
 
-const socket = new WebSocket('ws' + backendAdress.slice(4, backendAdress.length+1) +'ws/chat/hello_world/')
+const socket = new WebSocket('ws' + backendAdress.slice(4, backendAdress.length+1) +'ws/chat/2/')
 
 export default function ChatsPage() {
     const [chats, setChats] = useState<Chat[]>([])

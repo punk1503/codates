@@ -158,6 +158,6 @@ class Message(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='sender')
     text = models.TextField(null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='chat_id')
     class Meta:
         ordering = ['-timestamp']
