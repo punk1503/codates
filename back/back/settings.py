@@ -18,7 +18,10 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173']
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:5173',
+    'http://localhost:5173',
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -28,11 +31,11 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-CORS_ALLOWED_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization', 'Set-Cookie']
+CORS_ALLOWED_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization', 'Set-Cookie', '*']
 CSRF_COOKIE_NAME = 'csrftoken'
 CSRF_COOKIE_SAMESITE = 'None'
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SAMESITE = 'None'
 
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'daphne',
     'django.contrib.staticfiles',
     'api',
     'rest_framework',
@@ -85,7 +89,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'back.wsgi.application'
-
+ASGI_APPLICATION = 'back.routing.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -148,5 +160,5 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
-    ]
+    ],
 }

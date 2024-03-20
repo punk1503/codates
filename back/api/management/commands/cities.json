@@ -1,0 +1,17 @@
+[
+    {"name": "Москва", "latitude": 3},
+    {"name": "Санкт-Петербург", "latitude": 3},
+    {"name": "Новосибирск", "latitude": 7},
+    {"name": "Екатеринбург", "latitude": 5},
+    {"name": "Нижний Новгород", "latitude": 3},
+    {"name": "Казань", "latitude": 3},
+    {"name": "Челябинск", "latitude": 5},
+    {"name": "Омск", "latitude": 6},
+    {"name": "Самара", "latitude": 4},
+    {"name": "Ростов-на-Дону", "latitude": 3},
+    {"name": "Уфа", "latitude": 5},
+    {"name": "Красноярск", "latitude": 7},
+    {"name": "Воронеж", "latitude": 3},
+    {"name": "Пермь", "latitude": 5},
+    {"name": "Волгоград", "latitude": 3}
+]

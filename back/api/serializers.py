@@ -6,7 +6,7 @@ from rest_framework import serializers
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies']
+        fields = ['id', 'password', 'username', 'first_name', 'last_name', 'telephone_number', 'age', 'gender', 'city', 'technologies', 'code_snippet', 'code_theme', 'description']
         extra_kwargs = {
             'password': {
                 'error_messages': {
@@ -14,7 +14,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
                     'blank': 'Пароль: не может быть пустым.',
                     'max_length': 'Пароль: слишком длинный.',
                     'min_length': 'Пароль: слишком короткий.'
-                }
+                },
+                'write_only': True,
             },
             'username': {
                 'error_messages': {
@@ -47,6 +48,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
                     'blank': 'Технологии: не может быть пустым.',
                 }
             },
+            'code_snippet': {
+                'required': False,
+            },
+            'code_theme': {
+                'required': False
+            },
+            'description': {
+                'required': False,
+            },
         }
 
     def create(self, validated_data):
@@ -54,6 +64,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
         user = CustomUser.objects.create_user(**validated_data)
         user.technologies.set(technologies)
         return user
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['images'] = [ProfilePictureSerializer(picture).data for picture in ProfilePicture.objects.filter(user=instance)]
+        representation['technologies'] = [TechnologySerializer(tech).data for tech in instance.technologies.all()]
+        return representation
 
 
 class CustomUserGradesSerializer(serializers.ModelSerializer):
@@ -70,3 +86,33 @@ class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
         model = Technology
         fields  = '__all__'
+    
+class ProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfilePicture
+        fields = ['user', 'image']
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        sender = None
+        receiver = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            sender = request.user
+            receiver = instance.user1 if instance.user1 != sender else instance.user2
+            
+        representation = {}
+        representation['user'] = CustomUserSerializer(receiver).data
+        return representation
+
+class MessageSerializer(serializers.ModelSerializer):
+    user = CustomUserSerializer()
+    class Meta:
+        model = Message
+        fields = ['user', 'text']
+
+
