@@ -91,3 +91,28 @@ class ProfilePictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfilePicture
         fields = ['user', 'image']
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        sender = None
+        receiver = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            sender = request.user
+            receiver = instance.user1 if instance.user1 != sender else instance.user2
+            
+        representation = {}
+        representation['user'] = CustomUserSerializer(receiver).data
+        return representation
+
+class MessageSerializer(serializers.ModelSerializer):
+    user = CustomUserSerializer()
+    class Meta:
+        model = Message
+        fields = ['user', 'text']
+
+

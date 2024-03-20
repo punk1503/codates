@@ -1,5 +1,5 @@
 import { backendAdress } from "./env"
 
 export default function addMediaPrefix(woPrefix: string) {
-    return backendAdress + woPrefix
+    return backendAdress + woPrefix.slice(1)
 }

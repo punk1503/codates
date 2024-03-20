@@ -5,6 +5,8 @@ from .models import *
 from .serializers import *
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.middleware.csrf import get_token
+import datetime
+
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
     '''
@@ -80,7 +82,7 @@ class CustomLoginView(views.APIView):
             login(request, user)
             # Устанавливаем идентификатор сессии в куки
             response = Response({'message': 'Вход успешен'})
-            response.set_cookie(key='sessionid', value=request.session.session_key, samesite='None')
+            response.set_cookie(key='sessionid', httponly=False, value=request.session.session_key, samesite='None', expires=datetime.datetime.now() + datetime.timedelta(days=7), secure=True)
             return response
         else:
             return Response({'password': ['Неподходящая пара логин-пароль.']}, status=401)
@@ -94,7 +96,6 @@ def logout_view(request):
 @api_view(['POST'])
 def like_view(request):
     if request.data.get('to_user_id'):
-        print(f"Liked user {request.data['to_user_id']}")
         grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=True)
         grade.save()
         return Response(status=status.HTTP_200_OK)
@@ -103,8 +104,21 @@ def like_view(request):
 @api_view(['POST'])
 def dislike_view(request):
     if request.data.get('to_user_id'):
-        print(f"Disliked user {request.data['to_user_id']}")
         grade = CustomUserGrades(user_from=request.user, user_to=CustomUser.objects.get(id=request.data['to_user_id']), grade=False)
         grade.save()
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_404_NOT_FOUND)
+
+class ChatsListAPIView(generics.ListAPIView):
+    def get_queryset(self):
+        return Chat.objects.filter(Q(user1=self.request.user) | Q(user2=self.request.user))
+    
+    serializer_class = ChatSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class MessagesListAPIView(generics.ListAPIView):
+    def get_queryset(self):
+        return Message.objects.filter(chat=Chat.objects.get(Q(user1=self.request.user, user2=self.kwargs.get('user_id')) | Q(user1=self.kwargs.get('user_id'), user2=self.request.user)))
+    
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated]

@@ -33,7 +33,11 @@ function App() {
     return <Spinner />
   }
 
-  return <AppRoutes />
+  return (
+    <>
+      <AppRoutes />
+    </>
+  ) 
 }
 
 export default App
