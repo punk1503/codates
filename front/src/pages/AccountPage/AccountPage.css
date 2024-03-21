@@ -22,3 +22,19 @@
 .account_block__top__close {
 
 }
+
+.edit_form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.edit_form > * {
+    width: 100%;
+}
+
+.edit_form__item {
+    display: flex;
+    flex-direction: column;
+}

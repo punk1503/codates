@@ -123,3 +123,10 @@ class MessagesListAPIView(generics.ListAPIView):
     
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class CustomUserUpdateAPIView(generics.UpdateAPIView):
+    def get_object(self):
+        return self.request.user
+    
+    serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAuthenticated]

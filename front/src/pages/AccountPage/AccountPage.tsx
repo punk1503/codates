@@ -5,27 +5,43 @@ import { PhotoGallery } from '../../components/UserCard/UserCard'
 import { CenteredBlock } from '../../components/Blocks'
 import { City, CityReformed } from "../../types/City.interface"
 import { Technology, TechnologyReformed } from "../../types/Technology.interface"
-import Form from '../../components/Form'
 import hljs from 'highlight.js'
 import Axios from '../../utils/axiosConfig'
 import addMediaPrefix from '../../utils/addMediaPrefix'
 import reformToSelectData from '../../utils/reformToSelectData'
+import Button from '../../components/Button'
+import CustomSelect from '../../components/CustomSelect'
+import '../../components/Input/Input.css'
 import '../../components/UserCard/UserCard.css'
 import '../../assets/css/themes.css'
 
 export default function AccountPage() {
     const [user, setUser] = useState<User | null>(null)
+    const [errors, setErrors] = useState<string[]>([])
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [cities, setCities] = useState<CityReformed[]>([])
     const [technologies, setTechnologies] = useState<TechnologyReformed[]>([])
 
-    useEffect(() => {
+
+    // edit form fields
+    const [age, setAge] = useState<number>()
+    const [userTechnologies, setUserTechnologies] = useState<TechnologyReformed[]>([])
+    const [userCity, setUserCity] = useState<CityReformed>()
+    const [userSnippet, setUserSnippet] = useState<string>()
+    const [userTheme, setUserTheme] = useState()
+
+    function fetchUserData() {
         Axios.get('whoami/')
         .then((response) => {
-            setUser(response.data)        
+            setUser(response.data)
+            setAge(response.data.age) 
+            setUserCity(response.data.city)
+            setUserTechnologies(response.data.technologies)
             hljs.highlightAll()
-
         })
+    }
+    useEffect(() => {
+        fetchUserData()
     }, [])
 
     useEffect(() => {
@@ -48,6 +64,26 @@ export default function AccountPage() {
 
         fetchCitiesAndTechologies()
     }, [])
+
+    function formSubmit() {
+        const data = {
+            age: age,
+            technologies: userTechnologies,
+            city: userCity?.value,
+            code_snippet: userSnippet,
+            code_theme: userTheme,
+        }
+
+        Axios.patch('user-edit/', data)
+        .then((response) => {
+            fetchUserData()
+            setIsEditMode(false)
+        })
+        .catch((error) => {
+            setErrors(error.data)
+        })
+    }
+
     return (
         <CenteredBlock>
             <div className='account_block'>
@@ -65,7 +101,7 @@ export default function AccountPage() {
                         <div><strong>username: </strong>{user?.username}</div>
                         <p><strong>Описание: </strong>{user?.description}</p>
                         <p><strong>Город: </strong>{user?.city.name}</p>
-                        <div className="tech_block">
+                        <div className="tech__bar">
                             {user?.technologies?.map((tech, index) => {
                                 return (
                                 <div
@@ -79,52 +115,22 @@ export default function AccountPage() {
                             })}
                         </div>
                         <p><strong>Тема редактора: </strong>{user?.code_theme}</p>
-                        <pre className={`code_block theme-${user?.code_theme}`}>
+                        <pre className={`code_block theme-${user?.code_theme ? user?.code_theme : 'default'}`}>
                             <code className='code_block'>
                                 {user?.code_snippet}
                             </code>
                         </pre>
                     </>
                     :
-                    <CenteredBlock>
+                    <div className='edit_form'>
                         <input type="file" multiple accept='.jpg,.png' />
-                        <Form submit_button_text='Сохранить' action_url='user-edit/' fields_data={
-                            [
-                                {
-                                    label: 'Возраст',
-                                    placeholder: '18+',
-                                    requestFieldName: 'age',
-                                    fieldType: 'age',
-                                    isRequired: true
-                                },
-                                {
-                                    label: 'Технологии',
-                                    placeholder: 'Ваши любимые языки программирования',
-                                    requestFieldName: 'technologies',
-                                    fieldType: 'choices_multi',
-                                    isRequired: false,
-                                    choices: technologies,
-                                    isSearchable: true,
-                                },
-                                {
-                                    label: 'Город',
-                                    placeholder: 'Ваш город',
-                                    requestFieldName: 'city',
-                                    fieldType: 'choices',
-                                    isRequired: false,
-                                    choices: cities,
-                                    isSearchable: true
-                                },
-                                {
-                                    label: 'Сниппет кода',
-                                    placeholder: 'Ваш код',
-                                    requestFieldName: 'code_snippet',
-                                    fieldType: 'text_large',
-                                    isRequired: false,
-                                }
-                            ]
-                        } response_callback={() => {setIsEditMode(false)}}></Form>
-                    </CenteredBlock>
+                        <label>Возраст</label>
+                        <input type="number" min={18} className="custom_input" value={age} onChange={(e) => {setAge(parseInt(e.target.value))}}/>
+                        <label>Город</label>
+                        <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity}></CustomSelect>
+                        <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies}></CustomSelect>
+                        <Button onClick={() => {formSubmit()}}>Сохранить</Button>
+                    </div>
                 }
             </div>
         </CenteredBlock>

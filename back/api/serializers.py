@@ -72,6 +72,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
         representation['city'] = CitySerializer(City.objects.get(id=representation['city'])).data
         return representation
 
+    def update(self, instance, validated_data):
+        print(validated_data)
+        return super().update(instance, validated_data)
 
 class CustomUserGradesSerializer(serializers.ModelSerializer):
     class Meta:
