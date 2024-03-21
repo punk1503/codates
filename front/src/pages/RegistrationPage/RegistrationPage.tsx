@@ -113,7 +113,7 @@ export default function RegistrationPage() {
                     ]
                 }
                 submit_button_text="Регистрация"
-                response_callback={() => {navigate('/')}}></Form>
+                response_callback={() => {navigate('/profile')}}></Form>
             </CenteredBlock>
         </>
     )
