@@ -86,7 +86,7 @@ export default function AccountPage() {
                         </pre>
                     </>
                     :
-                    <>
+                    <CenteredBlock>
                         <input type="file" multiple accept='.jpg,.png' />
                         <Form submit_button_text='Сохранить' action_url='user-edit/' fields_data={
                             [
@@ -124,7 +124,7 @@ export default function AccountPage() {
                                 }
                             ]
                         } response_callback={() => {setIsEditMode(false)}}></Form>
-                    </>
+                    </CenteredBlock>
                 }
             </div>
         </CenteredBlock>
