@@ -1,0 +1,6 @@
+.account_block {
+    max-width: 400px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,9 +1,9 @@
-type City = {
+export type City = {
     id: number,
     name: string,
 }
 
-type CityReformed = {
+export type CityReformed = {
     value: number,
     label: string,
 }

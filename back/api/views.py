@@ -43,11 +43,12 @@ def get_csrf_token(request):
     csrf_token = get_token(request)
     return Response({'csrf_token': csrf_token})
 
+@api_view(['GET'])
 def whoami(request):
     '''
     API ендпоинт для получения данных о текущем пользователе.
     '''
-    return request.user
+    return Response(CustomUserSerializer(request.user).data)
 
 class CityListAPIView(generics.ListCreateAPIView):
     '''
