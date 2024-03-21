@@ -4,6 +4,8 @@ import Form from "../../components/Form"
 import Axios from "../../utils/axiosConfig"
 import reformToSelectData from "../../utils/reformToSelectData"
 import { useNavigate } from "react-router-dom"
+import { City, CityReformed } from "../../types/City.interface"
+import { Technology, TechnologyReformed } from "../../types/Technology.interface"
 
 export default function RegistrationPage() {
     const [cities, setCities] = useState<CityReformed[]>([])
@@ -93,7 +95,7 @@ export default function RegistrationPage() {
                         },
                         {
                             label: 'Город',
-                            placeholder: 'Ваши город',
+                            placeholder: 'Ваш город',
                             requestFieldName: 'city',
                             fieldType: 'choices',
                             isRequired: false,

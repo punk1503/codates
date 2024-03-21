@@ -3,15 +3,21 @@ import { useEffect, useState } from 'react'
 import { User } from '../../types/User.interface'
 import { PhotoGallery } from '../../components/UserCard/UserCard'
 import { CenteredBlock } from '../../components/Blocks'
+import { City, CityReformed } from "../../types/City.interface"
+import { Technology, TechnologyReformed } from "../../types/Technology.interface"
+import Form from '../../components/Form'
 import hljs from 'highlight.js'
 import Axios from '../../utils/axiosConfig'
 import addMediaPrefix from '../../utils/addMediaPrefix'
+import reformToSelectData from '../../utils/reformToSelectData'
 import '../../components/UserCard/UserCard.css'
 import '../../assets/css/themes.css'
 
 export default function AccountPage() {
     const [user, setUser] = useState<User | null>(null)
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
+    const [cities, setCities] = useState<CityReformed[]>([])
+    const [technologies, setTechnologies] = useState<TechnologyReformed[]>([])
 
     useEffect(() => {
         Axios.get('whoami/')
@@ -20,6 +26,27 @@ export default function AccountPage() {
             hljs.highlightAll()
 
         })
+    }, [])
+
+    useEffect(() => {
+        const fetchCitiesAndTechologies = () => {
+            Axios.get<City[]>('cities/')
+            .then((response) => {
+                setCities(response.data.map((data) => {return reformToSelectData(data)}))
+            })
+            .catch((error) => {
+            })
+
+            Axios.get<Technology[]>('technologies/')
+            .then((response) => {
+                setTechnologies(response.data.map((data) => {return reformToSelectData(data)}))
+            })
+            .catch((error) => {
+
+            })
+        }
+
+        fetchCitiesAndTechologies()
     }, [])
     return (
         <CenteredBlock>
@@ -59,7 +86,45 @@ export default function AccountPage() {
                         </pre>
                     </>
                     :
-                    <></>
+                    <>
+                        <input type="file" multiple accept='.jpg,.png' />
+                        <Form submit_button_text='Сохранить' action_url='user-edit/' fields_data={
+                            [
+                                {
+                                    label: 'Возраст',
+                                    placeholder: '18+',
+                                    requestFieldName: 'age',
+                                    fieldType: 'age',
+                                    isRequired: true
+                                },
+                                {
+                                    label: 'Технологии',
+                                    placeholder: 'Ваши любимые языки программирования',
+                                    requestFieldName: 'technologies',
+                                    fieldType: 'choices_multi',
+                                    isRequired: false,
+                                    choices: technologies,
+                                    isSearchable: true,
+                                },
+                                {
+                                    label: 'Город',
+                                    placeholder: 'Ваш город',
+                                    requestFieldName: 'city',
+                                    fieldType: 'choices',
+                                    isRequired: false,
+                                    choices: cities,
+                                    isSearchable: true
+                                },
+                                {
+                                    label: 'Сниппет кода',
+                                    placeholder: 'Ваш код',
+                                    requestFieldName: 'code_snippet',
+                                    fieldType: 'text_large',
+                                    isRequired: false,
+                                }
+                            ]
+                        } response_callback={() => {setIsEditMode(false)}}></Form>
+                    </>
                 }
             </div>
         </CenteredBlock>
