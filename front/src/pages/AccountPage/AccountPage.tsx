@@ -1,10 +1,11 @@
 import './AccountPage.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { User } from '../../types/User.interface'
 import { PhotoGallery } from '../../components/UserCard/UserCard'
 import { CenteredBlock } from '../../components/Blocks'
 import { City, CityReformed } from "../../types/City.interface"
 import { Technology, TechnologyReformed } from "../../types/Technology.interface"
+import { FormError } from '../../components/Form/Form'
 import hljs from 'highlight.js'
 import Axios from '../../utils/axiosConfig'
 import addMediaPrefix from '../../utils/addMediaPrefix'
@@ -14,21 +15,22 @@ import CustomSelect from '../../components/CustomSelect'
 import '../../components/Input/Input.css'
 import '../../components/UserCard/UserCard.css'
 import '../../assets/css/themes.css'
-
 export default function AccountPage() {
     const [user, setUser] = useState<User | null>(null)
     const [errors, setErrors] = useState<string[]>([])
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [cities, setCities] = useState<CityReformed[]>([])
     const [technologies, setTechnologies] = useState<TechnologyReformed[]>([])
-
+    const [themes, setThemes] = useState<{key: string, label: string}[]>()
 
     // edit form fields
     const [age, setAge] = useState<number>()
     const [userTechnologies, setUserTechnologies] = useState<TechnologyReformed[]>([])
     const [userCity, setUserCity] = useState<CityReformed>()
     const [userSnippet, setUserSnippet] = useState<string>()
-    const [userTheme, setUserTheme] = useState()
+    const [userTheme, setUserTheme] = useState<{key: string, label: string}>()
+
+    const textareaRef = useRef(null)
 
     function fetchUserData() {
         Axios.get('whoami/')
@@ -37,9 +39,11 @@ export default function AccountPage() {
             setAge(response.data.age) 
             setUserCity(response.data.city)
             setUserTechnologies(response.data.technologies)
+            setUserSnippet(response.data.code_snippet)
             hljs.highlightAll()
         })
     }
+
     useEffect(() => {
         fetchUserData()
     }, [])
@@ -58,11 +62,19 @@ export default function AccountPage() {
                 setTechnologies(response.data.map((data) => {return reformToSelectData(data)}))
             })
             .catch((error) => {
+            })
+        }
 
+        const fetchThemes = () => {
+            Axios.get('themes/')
+            .then((response) => {
+                console.log(response.data)
+                setThemes(response.data)
             })
         }
 
         fetchCitiesAndTechologies()
+        fetchThemes()
     }, [])
 
     function formSubmit() {
@@ -74,7 +86,11 @@ export default function AccountPage() {
             code_theme: userTheme,
         }
 
-        Axios.patch('user-edit/', data)
+        Axios.patch('user-edit/', data, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
         .then((response) => {
             fetchUserData()
             setIsEditMode(false)
@@ -123,12 +139,19 @@ export default function AccountPage() {
                     </>
                     :
                     <div className='edit_form'>
+                        {errors.map((error) => {
+                            return <FormError text={error}></FormError>
+                        })}
                         <input type="file" multiple accept='.jpg,.png' />
                         <label>Возраст</label>
                         <input type="number" min={18} className="custom_input" value={age} onChange={(e) => {setAge(parseInt(e.target.value))}}/>
                         <label>Город</label>
                         <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity}></CustomSelect>
                         <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies}></CustomSelect>
+                        <CustomSelect isMulti={false} isSearchable={true} options={themes} onChange={setUserTheme} value={userTheme}></CustomSelect>
+                        
+                        <textarea ref={textareaRef} id='textbox' rows={10} value={userSnippet} onChange={(e) => {setUserSnippet(e.target.value as string)}}></textarea>
+
                         <Button onClick={() => {formSubmit()}}>Сохранить</Button>
                     </div>
                 }

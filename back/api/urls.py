@@ -18,6 +18,7 @@ urlpatterns = [
     path('dislike/', dislike_view),
     path('chats/', ChatsListAPIView.as_view()),
     path('chat/<int:user_id>/', MessagesListAPIView.as_view()),
-    path('user-edit/', CustomUserUpdateAPIView.as_view())
+    path('user-edit/', CustomUserUpdateAPIView.as_view()),
+    path('themes/', get_themes)
 
 ]

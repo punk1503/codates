@@ -130,3 +130,8 @@ class CustomUserUpdateAPIView(generics.UpdateAPIView):
     
     serializer_class = CustomUserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+@permission_classes([permissions.IsAuthenticated])
+@api_view(['GET'])
+def get_themes(request):
+    return Response([{'value': theme[0], 'label' : theme[1]} for theme in CustomUser.THEMES])
