@@ -40,6 +40,6 @@
     flex-direction: column;
 }
 
-.glass_block {
-
+pre code {
+    border-radius: 10px;
 }
