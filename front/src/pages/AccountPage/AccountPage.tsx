@@ -28,7 +28,7 @@ export default function AccountPage() {
     const [userTechnologies, setUserTechnologies] = useState<TechnologyReformed[]>([])
     const [userCity, setUserCity] = useState<CityReformed>()
     const [userSnippet, setUserSnippet] = useState<string>()
-    const [userTheme, setUserTheme] = useState<{key: string, label: string}>()
+    const [userTheme, setUserTheme] = useState<{value: string, label: string}>()
 
     const textareaRef = useRef(null)
 
@@ -37,8 +37,8 @@ export default function AccountPage() {
         .then((response) => {
             setUser(response.data)
             setAge(response.data.age) 
-            setUserCity(response.data.city)
-            setUserTechnologies(response.data.technologies)
+            setUserCity(reformToSelectData(response.data.city))
+            setUserTechnologies(response.data.technologies.map((tech: Technology) => reformToSelectData(tech)))
             setUserSnippet(response.data.code_snippet)
             hljs.highlightAll()
         })
@@ -85,7 +85,7 @@ export default function AccountPage() {
             code_snippet: userSnippet,
             code_theme: userTheme,
         }
-
+        console.log(data, userTechnologies)
         Axios.patch('user-edit/', data, {
             headers: {
                 'Content-Type': 'application/json',
@@ -99,12 +99,11 @@ export default function AccountPage() {
             setErrors(error.data)
         })
     }
-
     return (
-        <CenteredBlock>
+        <CenteredBlock style={{marginTop: '30px'}}>
             <div className='account_block'>
                 <div className="account_block__top">
-                    <div className="dummy"></div>
+                    <div className="dummy">Ваш профиль</div>
                     {
                         !isEditMode ? <svg onClick={() => {setIsEditMode(true)}} className='account_block__top__edit' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
                         :<svg onClick={() => {setIsEditMode(false)}} className='account_block__top__close' xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
@@ -112,7 +111,11 @@ export default function AccountPage() {
                 </div>
                 {!isEditMode ?
                     <>
+                        {user?.images[0] ? 
                         <PhotoGallery photos={user?.images ? user?.images.map((image) => addMediaPrefix(image.image)) : []}></PhotoGallery>
+                        :
+                        <></>
+                        }
                         <h4>{user?.first_name}, {user?.age}</h4>
                         <div><strong>username: </strong>{user?.username}</div>
                         <p><strong>Описание: </strong>{user?.description}</p>
@@ -139,17 +142,16 @@ export default function AccountPage() {
                     </>
                     :
                     <div className='edit_form'>
-                        {errors.map((error) => {
+                        {errors?.map((error) => {
                             return <FormError text={error}></FormError>
                         })}
                         <input type="file" multiple accept='.jpg,.png' />
                         <label>Возраст</label>
                         <input type="number" min={18} className="custom_input" value={age} onChange={(e) => {setAge(parseInt(e.target.value))}}/>
                         <label>Город</label>
-                        <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity}></CustomSelect>
-                        <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies}></CustomSelect>
-                        <CustomSelect isMulti={false} isSearchable={true} options={themes} onChange={setUserTheme} value={userTheme}></CustomSelect>
-                        
+                        <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity} defaultValue={userCity}></CustomSelect>
+                        <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies} defaultValue={[...userTechnologies].map((elem) => elem)}></CustomSelect>
+                        <CustomSelect isMulti={false} isSearchable={true} options={themes} onChange={setUserTheme} value={userTheme} defaultValue={userTheme}></CustomSelect>
                         <textarea ref={textareaRef} id='textbox' rows={10} value={userSnippet} onChange={(e) => {setUserSnippet(e.target.value as string)}}></textarea>
 
                         <Button onClick={() => {formSubmit()}}>Сохранить</Button>

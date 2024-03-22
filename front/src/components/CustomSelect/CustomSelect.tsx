@@ -7,9 +7,10 @@ type CustomSelectProps = {
     value: any,
     isMulti: boolean,
     isSearchable: boolean | undefined,
+    defaultValue: any | any[] | undefined,
 }
 
-export default function CustomSelect ({onChange, options, value, isMulti, isSearchable}: CustomSelectProps) {
+export default function CustomSelect ({onChange, options, value, isMulti, isSearchable, defaultValue}: CustomSelectProps) {
     return(
          <Select
             className='custom_select'
@@ -24,6 +25,7 @@ export default function CustomSelect ({onChange, options, value, isMulti, isSear
             }
             isMulti={isMulti}
             isSearchable={isSearchable}
+            defaultValue={defaultValue}
           />
          )
   }
