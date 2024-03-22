@@ -6,7 +6,7 @@ import { CenteredBlock } from '../../components/Blocks'
 import { City, CityReformed } from "../../types/City.interface"
 import { Technology, TechnologyReformed } from "../../types/Technology.interface"
 import { FormError } from '../../components/Form/Form'
-import hljs from 'highlight.js'
+import hljs, {HighlightResult} from 'highlight.js'
 import Axios from '../../utils/axiosConfig'
 import addMediaPrefix from '../../utils/addMediaPrefix'
 import reformToSelectData from '../../utils/reformToSelectData'
@@ -15,6 +15,18 @@ import CustomSelect from '../../components/CustomSelect'
 import '../../components/Input/Input.css'
 import '../../components/UserCard/UserCard.css'
 import '../../assets/css/themes.css'
+
+function createMarkup(result: HighlightResult): { __html: string } {
+    return { __html: result.value.trim() };
+}
+
+function highlight(code: string, language: string | null): HighlightResult {
+    if (language === null || language.trim() === '') {
+      return hljs.highlightAuto(code);
+    }
+    return hljs.highlight(code, { language });
+}  
+  
 export default function AccountPage() {
     const [user, setUser] = useState<User | null>(null)
     const [errors, setErrors] = useState<string[]>([])
@@ -22,16 +34,18 @@ export default function AccountPage() {
     const [cities, setCities] = useState<CityReformed[]>([])
     const [technologies, setTechnologies] = useState<TechnologyReformed[]>([])
     const [themes, setThemes] = useState<{key: string, label: string}[]>()
-
+    
     // edit form fields
     const [age, setAge] = useState<number>()
     const [userTechnologies, setUserTechnologies] = useState<TechnologyReformed[]>([])
     const [userCity, setUserCity] = useState<CityReformed>()
     const [userSnippet, setUserSnippet] = useState<string>()
     const [userTheme, setUserTheme] = useState<{value: string, label: string}>()
-
+    
     const textareaRef = useRef(null)
-
+    
+    let result = highlight(userSnippet ? userSnippet : '', null)
+    let markup = createMarkup(result)
     function fetchUserData() {
         Axios.get('whoami/')
         .then((response) => {
@@ -43,6 +57,12 @@ export default function AccountPage() {
             hljs.highlightAll()
         })
     }
+
+    useEffect(() => {
+        result = highlight(userSnippet ? userSnippet : '', null)
+        markup = createMarkup(result)
+        hljs.highlightAll()
+    })
 
     useEffect(() => {
         fetchUserData()
@@ -99,6 +119,7 @@ export default function AccountPage() {
             setErrors(error.data)
         })
     }
+
     return (
         <CenteredBlock style={{marginTop: '30px'}}>
             <div className='account_block'>
@@ -135,8 +156,7 @@ export default function AccountPage() {
                         </div>
                         <p><strong>Тема редактора: </strong>{user?.code_theme}</p>
                         <pre className={`code_block theme-${user?.code_theme ? user?.code_theme : 'default'}`}>
-                            <code className='code_block'>
-                                {user?.code_snippet}
+                            <code className='code_block' dangerouslySetInnerHTML={markup}>
                             </code>
                         </pre>
                     </>
