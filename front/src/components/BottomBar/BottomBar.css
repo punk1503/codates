@@ -2,9 +2,12 @@
     position: fixed;
     bottom: 0;
     left: 0;
+    right: 0;
+    z-index: 1000;
+    will-change: transform;
+    transform: translateZ(0);
     display: flex;
-    width: 100%;
-    height: 70px;
+    height: var(--bottom-bar-height);
     background-color: var(--background2);
     justify-content: center;
     align-items: center;

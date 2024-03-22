@@ -69,8 +69,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['images'] = [ProfilePictureSerializer(picture).data for picture in ProfilePicture.objects.filter(user=instance)]
         representation['technologies'] = [TechnologySerializer(tech).data for tech in instance.technologies.all()]
+        representation['city'] = CitySerializer(City.objects.get(id=representation['city'])).data
         return representation
 
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
 
 class CustomUserGradesSerializer(serializers.ModelSerializer):
     class Meta:

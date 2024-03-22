@@ -43,11 +43,12 @@ def get_csrf_token(request):
     csrf_token = get_token(request)
     return Response({'csrf_token': csrf_token})
 
+@api_view(['GET'])
 def whoami(request):
     '''
     API ендпоинт для получения данных о текущем пользователе.
     '''
-    return request.user
+    return Response(CustomUserSerializer(request.user).data)
 
 class CityListAPIView(generics.ListCreateAPIView):
     '''
@@ -122,3 +123,15 @@ class MessagesListAPIView(generics.ListAPIView):
     
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class CustomUserUpdateAPIView(generics.UpdateAPIView):
+    def get_object(self):
+        return self.request.user
+    
+    serializer_class = CustomUserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+@permission_classes([permissions.IsAuthenticated])
+@api_view(['GET'])
+def get_themes(request):
+    return Response([{'value': theme[0], 'label' : theme[1]} for theme in CustomUser.THEMES])

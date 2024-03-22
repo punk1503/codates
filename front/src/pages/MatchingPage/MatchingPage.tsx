@@ -4,7 +4,7 @@ import { CenteredBlock } from "../../components/Blocks"
 
 export default function MatchingPage() {
     return (
-        <CenteredBlock style={{marginTop: '5rem'}}>
+        <CenteredBlock style={{marginTop: '3rem'}}>
             <UserCard
             />
         </CenteredBlock>

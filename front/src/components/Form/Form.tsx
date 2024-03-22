@@ -13,7 +13,7 @@ type FormProps = {
     error_callback?: (any: any) => any,
 }
 
-function FormError({ text }: {text: string}) {
+export function FormError({ text }: {text: string}) {
     return (
         <div className="form__error">
             {text}

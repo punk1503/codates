@@ -10,7 +10,7 @@ function createMarkup(result: HighlightResult): { __html: string } {
   return { __html: result.value.trim() };
 }
 
-function PhotoGallery({ photos} : {photos: string[]} ) {
+export function PhotoGallery({ photos} : {photos: string[]} ) {
   const [currentPhotoID, setCurrentPhotoID] = useState(0);
 
   useEffect(() => {
