@@ -13,6 +13,13 @@ export default function Input({data, value, setValue}: {data: FieldData, value: 
                         <input value={value} onChange={(event) => setValue(event.target.value)} className="custom_input" type="text" placeholder={data.placeholder}/>
                     </div>
                 )
+            case 'text_large':
+                return (
+                    <div>
+                        <label>{data.label}</label>
+                        <textarea rows={10} className="custom_input" value={value} onChange={(event) => setValue(event.target.textContent)}></textarea>
+                    </div>
+                )
             case 'password':
                 return (
                     <div>

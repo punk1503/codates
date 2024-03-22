@@ -9,7 +9,6 @@ export default function LogoutPage() {
     useEffect(() => {
         Axios.get('logout/')
         .then((response) => {
-            console.log(response)
             navigate('/')
             setIsAuthenticated(false)
         })

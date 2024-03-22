@@ -6,7 +6,7 @@ export default function MainPage() {
     const { isAuthenticated } = useAuth()
     return (
         <>
-        <CenteredBlock style={{marginTop: "5rem"}}>
+        <CenteredBlock style={{marginTop: "1rem"}}>
             <div className="main_page__grid">
                 <div className="main_page__grid__row">
                     <div className="main_page__grid__col main_page__grid__col--left">
