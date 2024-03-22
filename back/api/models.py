@@ -109,18 +109,19 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def clusterize(self):
-        user_features=[self.age/80, int(self.gender), self.city.latitude/24]
-        for technology in Technology.objects.all():
-            if self.technologies.filter(id=technology.id).exists():
-                user_features.append(1)
-            else:
-                user_features.append(0)
-        X_user = np.array(user_features).reshape(1, -1)
-        scaler = StandardScaler()
-        X_user_scaled = scaler.fit_transform(X_user)
-        pca = PCA(n_components=1)
-        X_user_pca = pca.fit_transform(X_user_scaled)
-        self.cluster = X_user_pca[0][0]
+        # user_features=[self.age/80, int(self.gender), self.city.latitude/24]
+        # for technology in Technology.objects.all():
+        #     if self.technologies.filter(id=technology.id).exists():
+        #         user_features.append(1)
+        #     else:
+        #         user_features.append(0)
+        # X_user = np.array(user_features).reshape(1, -1)
+        # scaler = StandardScaler()
+        # X_user_scaled = scaler.fit_transform(X_user)
+        # pca = PCA(n_components=1)
+        # X_user_pca = pca.fit_transform(X_user_scaled)
+        # self.cluster = X_user_pca[0][0]
+        pass
 
     def match(self):
         unmatched_users = CustomUser.objects.exclude(id=self.id).exclude(id__in=CustomUserGrades.objects.filter(user_from=self.id).values_list('user_to'))
