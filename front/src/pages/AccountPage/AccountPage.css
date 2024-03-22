@@ -12,6 +12,7 @@
 .account_block__top {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .account_block__top svg {
@@ -37,4 +38,8 @@
 .edit_form__item {
     display: flex;
     flex-direction: column;
+}
+
+.glass_block {
+
 }

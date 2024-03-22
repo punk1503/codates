@@ -127,7 +127,7 @@ export default function AccountPage() {
                     }           
                 </div>
                 {!isEditMode ?
-                    <>
+                    <div className='glass_block'>
                         {user?.images[0] ? 
                         <PhotoGallery photos={user?.images ? user?.images.map((image) => addMediaPrefix(image.image)) : []}></PhotoGallery>
                         :
@@ -155,7 +155,7 @@ export default function AccountPage() {
                             <code className='code_block hljs' dangerouslySetInnerHTML={markup}>
                             </code>
                         </pre>
-                    </>
+                    </div>
                     :
                     <div className='edit_form'>
                         {errors?.map((error) => {
