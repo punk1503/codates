@@ -54,14 +54,12 @@ export default function AccountPage() {
             setUserCity(reformToSelectData(response.data.city))
             setUserTechnologies(response.data.technologies.map((tech: Technology) => reformToSelectData(tech)))
             setUserSnippet(response.data.code_snippet)
-            hljs.highlightAll()
         })
     }
 
     useEffect(() => {
         result = highlight(userSnippet ? userSnippet : '', null)
         markup = createMarkup(result)
-        hljs.highlightAll()
     })
 
     useEffect(() => {
@@ -154,7 +152,7 @@ export default function AccountPage() {
                         </div>
                         <p><strong>Тема редактора: </strong>{user?.code_theme}</p>
                         <pre className={`code_block theme-${user?.code_theme ? user?.code_theme : 'default'}`}>
-                            <code className='code_block' dangerouslySetInnerHTML={markup}>
+                            <code className='code_block hljs' dangerouslySetInnerHTML={markup}>
                             </code>
                         </pre>
                     </>
