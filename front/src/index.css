@@ -13,8 +13,14 @@
   --accent-dimmed: hsl(317, 100%, 75%);
   --red-light: hsl(4, 89%, 75%);
   --red-dark: hsl(9, 84%, 39%);
+
+/* sizes */
+  --bottom-bar-height: 70px;
 }
 
+#root {
+  padding-bottom: var(--bottom-bar-height);
+}
 
 body {
   font-family: "Martian Mono", monospace;
