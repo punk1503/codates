@@ -17,14 +17,14 @@ import '../../components/UserCard/UserCard.css'
 import '../../assets/css/themes.css'
 
 function createMarkup(result: HighlightResult): { __html: string } {
-    return { __html: result.value.trim() };
+    return { __html: result.value.trim() }
 }
 
 function highlight(code: string, language: string | null): HighlightResult {
     if (language === null || language.trim() === '') {
-      return hljs.highlightAuto(code);
+      return hljs.highlightAuto(code)
     }
-    return hljs.highlight(code, { language });
+    return hljs.highlight(code, { language })
 }  
   
 export default function AccountPage() {
@@ -88,7 +88,6 @@ export default function AccountPage() {
         const fetchThemes = () => {
             Axios.get('themes/')
             .then((response) => {
-                console.log(response.data)
                 setThemes(response.data)
             })
         }
@@ -105,7 +104,6 @@ export default function AccountPage() {
             code_snippet: userSnippet,
             code_theme: userTheme,
         }
-        console.log(data, userTechnologies)
         Axios.patch('user-edit/', data, {
             headers: {
                 'Content-Type': 'application/json',
