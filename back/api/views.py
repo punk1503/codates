@@ -1,4 +1,4 @@
-from rest_framework import permissions, generics, status, views
+from rest_framework import permissions, generics, status, views, parsers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .models import *
@@ -135,3 +135,26 @@ class CustomUserUpdateAPIView(generics.UpdateAPIView):
 @api_view(['GET'])
 def get_themes(request):
     return Response([{'value': theme[0], 'label' : theme[1]} for theme in CustomUser.THEMES])
+
+class ProfilePictureCreateAPIView(generics.CreateAPIView):
+    serializer_class = ProfilePictureSerializer
+    queryset = ProfilePicture.objects.all()
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+
+    def post(self, request, *args, **kwargs):
+        if request.data.get('image'):
+            ProfilePicture.objects.filter(user=request.user.id).delete()
+        serializer = self.serializer_class(data={'user': request.user.id, 'image': request.data['image']})
+        if serializer.is_valid():
+            # you can access the file like this from serializer
+            # uploaded_file = serializer.validated_data["file"]
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )

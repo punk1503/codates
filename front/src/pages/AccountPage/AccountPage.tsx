@@ -42,10 +42,18 @@ export default function AccountPage() {
     const [userSnippet, setUserSnippet] = useState<string>()
     const [userTheme, setUserTheme] = useState<{value: string, label: string}>()
     
-    const textareaRef = useRef(null)
+    const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
     
     let result = highlight(userSnippet ? userSnippet : '', null)
     let markup = createMarkup(result)
+
+
+    useEffect(() => {
+        result = highlight(userSnippet ? userSnippet : '', null)
+        markup = createMarkup(result)
+    })
+
     function fetchUserData() {
         Axios.get('whoami/')
         .then((response) => {
@@ -56,15 +64,6 @@ export default function AccountPage() {
             setUserSnippet(response.data.code_snippet)
         })
     }
-
-    useEffect(() => {
-        result = highlight(userSnippet ? userSnippet : '', null)
-        markup = createMarkup(result)
-    })
-
-    useEffect(() => {
-        fetchUserData()
-    }, [])
 
     useEffect(() => {
         const fetchCitiesAndTechologies = () => {
@@ -92,9 +91,24 @@ export default function AccountPage() {
 
         fetchCitiesAndTechologies()
         fetchThemes()
+        fetchUserData()
     }, [])
 
-    function formSubmit() {
+    async function formSubmit() {
+        async function sendProfilePicture() {
+            if (fileInputRef.current?.files) {
+                for(const file of fileInputRef.current.files) {
+                    const filesFormData = new FormData()
+                    filesFormData.append('image', file)
+                    Axios.post('profile-picture-upload/', filesFormData, {
+                        headers : {
+                            'Content-Type': `multipart/form-data;`
+                        }
+                    })
+                }
+            }
+        }
+
         const data = {
             age: age,
             technologies: userTechnologies,
@@ -102,6 +116,7 @@ export default function AccountPage() {
             code_snippet: userSnippet,
             code_theme: userTheme,
         }
+        await sendProfilePicture()
         Axios.patch('user-edit/', data, {
             headers: {
                 'Content-Type': 'application/json',
@@ -161,7 +176,7 @@ export default function AccountPage() {
                         {errors?.map((error) => {
                             return <FormError text={error}></FormError>
                         })}
-                        <input type="file" multiple accept='.jpg,.png' />
+                        <input ref={fileInputRef} type="file" multiple accept='.jpg,.png' />
                         <label>Возраст</label>
                         <input type="number" min={18} className="custom_input" value={age} onChange={(e) => {setAge(parseInt(e.target.value))}}/>
                         <label>Город</label>
