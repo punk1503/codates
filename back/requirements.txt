@@ -6,5 +6,5 @@ phonenumbers==8.13.31
 pytz==2024.1
 sqlparse==0.4.4
 channels[daphne]
-corsheaders
+django-cors-headers
 numpy
