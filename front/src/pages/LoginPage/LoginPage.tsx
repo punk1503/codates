@@ -31,7 +31,7 @@ export default function LoginPage() {
                 }
                 submit_button_text="Вход"
                 response_callback={(response) => {
-                    navigate('/');
+                    navigate('/matching');
                 }}
             ></Form>
         </CenteredBlock>
