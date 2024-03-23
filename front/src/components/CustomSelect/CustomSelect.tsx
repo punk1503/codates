@@ -7,25 +7,17 @@ type CustomSelectProps = {
     value: any,
     isMulti: boolean,
     isSearchable: boolean | undefined,
-    defaultValue: any | any[] | undefined,
 }
 
-export default function CustomSelect ({onChange, options, value, isMulti, isSearchable, defaultValue}: CustomSelectProps) {
+export default function CustomSelect ({onChange, options, value, isMulti, isSearchable}: CustomSelectProps) {
     return(
          <Select
             className='custom_select'
             options={options}
-            onChange={(val) => isMulti
-                ? onChange(val.map((c: any) => c.value))
-                : onChange(val.value)
-            }
-            value={isMulti
-                ? options?.filter((c) => value?.includes(c.value))
-                : options?.find((c) => c.value === value)
-            }
+            onChange={onChange}
+            value={value}
             isMulti={isMulti}
             isSearchable={isSearchable}
-            defaultValue={defaultValue}
           />
          )
   }

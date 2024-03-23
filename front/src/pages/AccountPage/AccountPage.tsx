@@ -111,10 +111,10 @@ export default function AccountPage() {
 
         const data = {
             age: age,
-            technologies: userTechnologies,
+            technologies: userTechnologies.map((tech) => tech.value),
             city: userCity?.value,
             code_snippet: userSnippet,
-            code_theme: userTheme,
+            code_theme: userTheme?.value,
         }
         await sendProfilePicture()
         Axios.patch('user-edit/', data, {
@@ -180,9 +180,9 @@ export default function AccountPage() {
                         <label>Возраст</label>
                         <input type="number" min={18} className="custom_input" value={age} onChange={(e) => {setAge(parseInt(e.target.value))}}/>
                         <label>Город</label>
-                        <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity} defaultValue={userCity}></CustomSelect>
-                        <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies} defaultValue={[...userTechnologies].map((elem) => elem)}></CustomSelect>
-                        <CustomSelect isMulti={false} isSearchable={true} options={themes} onChange={setUserTheme} value={userTheme} defaultValue={userTheme}></CustomSelect>
+                        <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity}></CustomSelect>
+                        <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies}></CustomSelect>
+                        <CustomSelect isMulti={false} isSearchable={true} options={themes} onChange={setUserTheme} value={userTheme}></CustomSelect>
                         <textarea ref={textareaRef} id='textbox' rows={10} value={userSnippet} onChange={(e) => {setUserSnippet(e.target.value as string)}}></textarea>
 
                         <Button onClick={() => {formSubmit()}}>Сохранить</Button>
