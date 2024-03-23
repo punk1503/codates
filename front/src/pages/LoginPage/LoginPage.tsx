@@ -32,8 +32,8 @@ export default function LoginPage() {
                 }
                 submit_button_text="Вход"
                 response_callback={() => {
-                    navigate('/matching')
                     setIsAuthenticated(true)
+                    navigate('/')
                 }}
             ></Form>
         </CenteredBlock>

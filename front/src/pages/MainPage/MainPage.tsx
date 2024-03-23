@@ -2,6 +2,8 @@ import "../../components/Button/Button.css"
 import "./MainPage.css"
 import { CenteredBlock } from "../../components/Blocks"
 import { useAuth } from "../../context/AuthContext"
+import img from '../../assets/images/boston.jpg'
+
 export default function MainPage() {
     const { isAuthenticated } = useAuth()
     return (
@@ -22,7 +24,7 @@ export default function MainPage() {
                         : <></>}
                     </div>
                     <div className="main_page__grid__col">
-                        <img src="https://placehold.co/400x400" alt="" />
+                        <img width={400} height={400} src={img} alt="" />
                     </div>
                 </div>
             </div>
