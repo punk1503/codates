@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import Form from "../../components/Form/Form"
 import { CenteredBlock } from "../../components/Blocks"
-import Cookies from "js-cookie"
+import { useAuth } from "../../context/AuthContext"
 
 export default function LoginPage() {
     const navigate = useNavigate()
+    const { setIsAuthenticated } = useAuth()
     return (
         <>
         <CenteredBlock>
@@ -30,8 +31,9 @@ export default function LoginPage() {
                     ]
                 }
                 submit_button_text="Вход"
-                response_callback={(response) => {
-                    navigate('/matching');
+                response_callback={() => {
+                    navigate('/matching')
+                    setIsAuthenticated(true)
                 }}
             ></Form>
         </CenteredBlock>
