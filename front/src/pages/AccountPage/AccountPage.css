@@ -43,3 +43,8 @@
 pre code {
     border-radius: 10px;
 }
+
+.photo_gallery {
+    border-radius: 10px;
+    overflow: hidden;
+}
