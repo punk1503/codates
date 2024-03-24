@@ -32,6 +32,7 @@ CORS_ALLOWED_ORIGINS = [
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 CORS_ALLOWED_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization', 'Set-Cookie', '*']
+CORS_EXPOSE_HEADERS = ['X-CSRFToken', 'Content-Type', 'Authorization', 'Set-Cookie', '*']
 CSRF_COOKIE_NAME = 'csrftoken'
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = False
@@ -43,7 +44,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:5173',
     'http://localhost:5173'
 ]
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',

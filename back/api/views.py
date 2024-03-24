@@ -6,6 +6,7 @@ from .serializers import *
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.middleware.csrf import get_token
 import datetime
+from django.db.models import Q
 
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
@@ -82,8 +83,7 @@ class CustomLoginView(views.APIView):
         if user is not None:
             login(request, user)
             # Устанавливаем идентификатор сессии в куки
-            response = Response({'message': 'Вход успешен'})
-            response.set_cookie(key='sessionid', httponly=False, value=request.session.session_key, samesite='None', expires=datetime.datetime.now() + datetime.timedelta(days=7), secure=True)
+            response = Response({'sessionid': request.session.session_key})
             return response
         else:
             return Response({'password': ['Неподходящая пара логин-пароль.']}, status=401)
