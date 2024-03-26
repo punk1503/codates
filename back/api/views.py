@@ -158,3 +158,16 @@ class ProfilePictureCreateAPIView(generics.CreateAPIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+class ChatDeleteAPIView(generics.DestroyAPIView):
+    serializer_class = ChatSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        user = CustomUser.objects.get(id=self.kwargs['pk'])
+        return Chat.objects.get(Q(user1=self.request.user, user2=user) | Q(user1=user, user2=self.request.user))
+
+    def delete(self, request, *args, **kwargs):
+        chat = self.get_queryset()
+        chat.delete()
+        return Response(status=status.HTTP_200_OK)
