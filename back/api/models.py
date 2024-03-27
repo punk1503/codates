@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db.models import Q
 
 
 class CustomUserManager(BaseUserManager):
@@ -127,7 +128,9 @@ class CustomUserGrades(models.Model):
 
     def save(self, *args, **kwargs):
         if CustomUserGrades.objects.filter(user_from=self.user_to, user_to=self.user_from).exists():
-            Chat(user1=self.user_from, user2=self.user_to).save()
+            chat = Chat.objects.filter(Q(user1=self.user_from, user2=self.user_to) | Q(user1=self.user_to, user2=self.user_from))
+            if not chat:
+                Chat(user1=self.user_from, user2=self.user_to).save()
         return super().save(*args, **kwargs)
         
 class ProfilePicture(models.Model):
@@ -137,6 +140,9 @@ class ProfilePicture(models.Model):
 class Chat(models.Model):
     user1 = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='initiator')
     user2 = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='receiver')
+
+    class Meta:
+        unique_together = [['user1', 'user2']]
 
 class Message(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='sender')
