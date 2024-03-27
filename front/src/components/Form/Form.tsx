@@ -33,8 +33,15 @@ export default function Form({action_url, fields_data, submit_button_text, respo
 
     function sendRequest() {
         const mapped = valuesArr.map((k, i) => {
+            if (fields_data[i].fieldType == 'choices') {
+                return [fields_data[i].requestFieldName, k.value]
+            }
+            if (fields_data[i].fieldType == 'choices_multi') {
+                return [fields_data[i].requestFieldName, k.map((k_val: any) => k_val.value)]
+            }
             return [fields_data[i].requestFieldName, k]
         })
+        console.log(mapped)
         if (mapped[0] !== undefined) {
             Axios.post(action_url, Object.fromEntries(mapped))
             .then((response) => {
