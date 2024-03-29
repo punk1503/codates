@@ -20,5 +20,6 @@ urlpatterns = [
     path('chat/<int:user_id>/', MessagesListAPIView.as_view()),
     path('user-edit/', CustomUserUpdateAPIView.as_view()),
     path('themes/', get_themes),
-    path('profile-picture-upload/', ProfilePictureCreateAPIView.as_view())
+    path('profile-picture-upload/', ProfilePictureCreateAPIView.as_view()),
+    path('chat-destroy/<int:pk>/', ChatDeleteAPIView.as_view()),
 ]

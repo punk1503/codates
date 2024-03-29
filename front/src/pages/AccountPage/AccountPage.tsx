@@ -37,12 +37,15 @@ export default function AccountPage() {
     
     // edit form fields
     const [age, setAge] = useState<number>()
+    const [userFirstName, setUserFirstName] = useState<string>('')
+    const [userGender, setUserGender] = useState<{value: boolean, label: string}>()
     const [userTechnologies, setUserTechnologies] = useState<TechnologyReformed[]>([])
     const [userCity, setUserCity] = useState<CityReformed>()
     const [userSnippet, setUserSnippet] = useState<string>()
     const [userTheme, setUserTheme] = useState<{value: string, label: string}>()
-    
+    const [userDescription, setUserDescription] = useState<string>('')
     const textareaRef = useRef<HTMLTextAreaElement>(null)
+    const descriptionRef = useRef<HTMLTextAreaElement>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
     
     let result = highlight(userSnippet ? userSnippet : '', null)
@@ -58,10 +61,13 @@ export default function AccountPage() {
         Axios.get('whoami/')
         .then((response) => {
             setUser(response.data)
-            setAge(response.data.age) 
+            setAge(response.data.age)
+            setUserFirstName(response.data.first_name)
+            setUserGender(response.data.gender ? {label: 'Мужской', value: true} : {label: 'Женский', value: false})
             setUserCity(reformToSelectData(response.data.city))
             setUserTechnologies(response.data.technologies.map((tech: Technology) => reformToSelectData(tech)))
             setUserSnippet(response.data.code_snippet)
+            setUserDescription(response.data.description)
         })
     }
 
@@ -111,10 +117,13 @@ export default function AccountPage() {
 
         const data = {
             age: age,
-            technologies: userTechnologies,
+            first_name: userFirstName,
+            gender: userGender?.value,
+            technologies: userTechnologies.map((tech) => tech.value),
             city: userCity?.value,
             code_snippet: userSnippet,
-            code_theme: userTheme,
+            code_theme: userTheme?.value,
+            description: userDescription,
         }
         await sendProfilePicture()
         Axios.patch('user-edit/', data, {
@@ -177,13 +186,31 @@ export default function AccountPage() {
                             return <FormError text={error}></FormError>
                         })}
                         <input ref={fileInputRef} type="file" multiple accept='.jpg,.png' />
+                        <label>Имя</label>
+                        <input type="text" className='custom_input' value={userFirstName} onChange={(e) => {setUserFirstName(e.target.value)}} />
                         <label>Возраст</label>
                         <input type="number" min={18} className="custom_input" value={age} onChange={(e) => {setAge(parseInt(e.target.value))}}/>
+                        <label>Пол</label>
+                        <CustomSelect isMulti={false} isSearchable={false} options={[
+                            {
+                                label: 'Мужской',
+                                value: true,                                
+                            },
+                            {
+                                label: 'Женский',
+                                value: false,                                
+                            },
+                        ]} onChange={setUserGender} value={userGender}></CustomSelect>
                         <label>Город</label>
-                        <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity} defaultValue={userCity}></CustomSelect>
-                        <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies} defaultValue={[...userTechnologies].map((elem) => elem)}></CustomSelect>
-                        <CustomSelect isMulti={false} isSearchable={true} options={themes} onChange={setUserTheme} value={userTheme} defaultValue={userTheme}></CustomSelect>
+                        <CustomSelect isMulti={false} isSearchable={true} options={cities} onChange={setUserCity} value={userCity}></CustomSelect>
+                        <label>Технологии</label>
+                        <CustomSelect isMulti={true} isSearchable={true} options={technologies} onChange={setUserTechnologies} value={userTechnologies}></CustomSelect>
+                        <label>Тема редактора</label>
+                        <CustomSelect isMulti={false} isSearchable={true} options={themes} onChange={setUserTheme} value={userTheme}></CustomSelect>
+                        <label>Сниппент кода</label>
                         <textarea ref={textareaRef} id='textbox' rows={10} value={userSnippet} onChange={(e) => {setUserSnippet(e.target.value as string)}}></textarea>
+                        <label>Описание</label>
+                        <textarea ref={descriptionRef} id='description' rows={10} value={userDescription} onChange={(e) => {setUserDescription(e.target.value as string)}}></textarea>
 
                         <Button onClick={() => {formSubmit()}}>Сохранить</Button>
                     </div>
