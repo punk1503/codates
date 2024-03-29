@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom"
-import Form from "../../components/Form/Form"
 import { CenteredBlock } from "../../components/Blocks"
+import { useAuth } from "../../context/AuthContext"
+import Form from "../../components/Form/Form"
 import Cookies from "js-cookie"
 
 export default function LoginPage() {
     const navigate = useNavigate()
+    const { setIsAuthenticated } = useAuth()
     return (
         <>
         <CenteredBlock>
@@ -31,7 +33,9 @@ export default function LoginPage() {
                 }
                 submit_button_text="Вход"
                 response_callback={(response) => {
-                    navigate('/');
+                    Cookies.set('sessionid', response.data['sessionid'])
+                    setIsAuthenticated(true)
+                    navigate('/')
                 }}
             ></Form>
         </CenteredBlock>

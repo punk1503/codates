@@ -5,7 +5,7 @@ from .models import *
 from .serializers import *
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.middleware.csrf import get_token
-import datetime
+from django.db.models import Q
 
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
@@ -75,18 +75,18 @@ def check_auth(request):
 
 class CustomLoginView(views.APIView):
     def post(self, request):
-        username = request.data.get('username')
+        # Extract username/email and password from request data
+        username_or_email = request.data.get('username')
         password = request.data.get('password')
+        user = authenticate(request, username=username_or_email, password=password)
 
-        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Устанавливаем идентификатор сессии в куки
-            response = Response({'message': 'Вход успешен'})
-            response.set_cookie(key='sessionid', httponly=False, value=request.session.session_key, samesite='None', expires=datetime.datetime.now() + datetime.timedelta(days=7), secure=True)
+            response = Response({'sessionid': request.session.session_key})
             return response
         else:
-            return Response({'password': ['Неподходящая пара логин-пароль.']}, status=401)
+            return Response({'detail': 'Неподходящая пара логин-пароль.'}, status=401)
+
 
 @permission_classes([permissions.AllowAny])
 @api_view(['GET'])
@@ -158,3 +158,16 @@ class ProfilePictureCreateAPIView(generics.CreateAPIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+class ChatDeleteAPIView(generics.DestroyAPIView):
+    serializer_class = ChatSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        user = CustomUser.objects.get(id=self.kwargs['pk'])
+        return Chat.objects.get(Q(user1=self.request.user, user2=user) | Q(user1=user, user2=self.request.user))
+
+    def delete(self, request, *args, **kwargs):
+        chat = self.get_queryset()
+        chat.delete()
+        return Response(status=status.HTTP_200_OK)

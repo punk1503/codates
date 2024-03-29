@@ -10,5 +10,11 @@
     border: none;
     padding: 10px 15px;
     background-color: var(--primary);
-    color: var(--text2)
+    color: var(--text2);
+    cursor: pointer;
+    transition: 0.1s ease-in;
+}
+
+.custom_button:hover {
+    background-color: var(--secondary);
 }

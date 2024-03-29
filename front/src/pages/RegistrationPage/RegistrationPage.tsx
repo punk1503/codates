@@ -18,18 +18,11 @@ export default function RegistrationPage() {
             .then((response) => {
                 setCities(response.data.map((data) => {return reformToSelectData(data)}))
             })
-            .catch((error) => {
-            })
-
             Axios.get<Technology[]>('technologies/')
             .then((response) => {
                 setTechnologies(response.data.map((data) => {return reformToSelectData(data)}))
             })
-            .catch((error) => {
-
-            })
         }
-
         fetchCitiesAndTechologies()
     }, [])
     return (
